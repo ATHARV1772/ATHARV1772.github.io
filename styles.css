@@ -17,6 +17,10 @@
 
 }
 
+body{
+    overflow: hidden;
+}
+
 .sidebar nav {
     padding: 6px;
 }
