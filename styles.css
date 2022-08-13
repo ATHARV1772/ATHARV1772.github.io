@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;1,300&display=swap');
+
 * {
 
     margin: 0;
@@ -12,7 +13,6 @@
 } */
 .sidebar {
     background-color: rgb(192, 190, 190);
-    /* width: 400px; */
     font-family: 'Aboreto';
     height: 100vw;
     font-weight: bolder;
@@ -38,7 +38,6 @@
 }
 
 .main {
-    /* background-color: yellow; */
     width: 85vw;
 }
 
@@ -47,12 +46,10 @@
 }
 
 .infocontainer {
-     /* background-color: rgb(82, 99, 212);  */
     height: 54vh;
     width: 75vw;
     display: flex;
     margin: 100px auto;
-    /* justify-content: space-around; */
     font-family: 'Josefin Sans', sans-serif;
 
 }
@@ -60,7 +57,7 @@
 .devInfo {
     display: flex;
 
-    justify-content:left;
+    justify-content: left;
     flex-direction: column;
 
 
@@ -83,10 +80,7 @@
 .about {
     font-size: 30px;
     font-family: 'Josefin Sans', sans-serif;
-
 }
-
-
 
 .buttons {
     margin: 30px;
@@ -104,43 +98,39 @@
     cursor: pointer;
 }
 
-.btn-sm{
+.btn-sm {
     border-radius: 22px;
-    font-size: 14px; 
-    padding:10px 25px;
-    margin :20px 50px;
+    font-size: 14px;
+    padding: 10px 25px;
+    margin: 20px 50px;
     background-color: white;
     color: rgb(1, 118, 243);
-    cursor:pointer;
-} 
+    cursor: pointer;
+}
 
 .btn-sm:hover {
     color: white;
     background-color: rgb(1, 118, 243);
 }
+
 .btn:hover {
     color: white;
-    background-color: darkolivegreen;;
+    background-color: darkolivegreen;
+    ;
 }
 
 .devpic img {
     height: 30vh;
-
-
 }
 
-
 .contacts {
-    /* padding: 0 40px;
-    padding-top: 120px; */
-    display:flex;
+    display: flex;
     flex-direction: column;
     height: 30vh;
     width: 75vw;
     display: flex;
     margin: 60px auto;
-    padding:20px;
-    /* justify-content: space-around; */
+    padding: 20px;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -156,18 +146,17 @@
 }
 
 .contacts form div input {
-    width: 16vw;
+    width: 25vw;
     border-radius: 5px;
-    margin: 6px 0 0 0 ;
+    margin: 6px 0 0 0;
     padding: 3px;
-
 }
 
 #emailHelp {
     font-size: 11px;
     color: midnightblue;
     margin: 0 5px;
-    padding: 3px 0 0 0 ;
+    padding: 3px 0 0 0;
 }
 
 #form-check {
@@ -179,200 +168,185 @@
     margin: 3px 0;
 }
 
-
-
-
-
-.skillitem{
+.skillitem {
     display: flex;
-    /* flex-direction:column ; */
     align-items: center;
     padding: 5px;
-    font-size:22px ;
+    font-size: 22px;
     font-family: 'Rubik Mono One', sans-serif;
 }
-.skillhtml{
+
+.skillhtml {
     width: 40px;
     height: 10px;
     background-color: royalblue;
     border-radius: 5px;
-    border:2px solid black;
-    /* align-items: center; */
+    border: 2px solid black;
 }
-.skillcss{
+
+.skillcss {
     width: 40px;
     height: 10px;
     background-color: royalblue;
     border-radius: 5px;
-    border:2px solid black;
-
-    /* align-items: center; */
-
-
+    border: 2px solid black;
 }
-.skillc{
+
+.skillc {
     width: 100px;
     height: 10px;
     background-color: royalblue;
     border-radius: 5px;
-    border:2px solid black;
-    /* align-items: center; */
-
-
+    border: 2px solid black;
 }
-.skillcpp{
+
+.skillcpp {
     width: 100px;
     height: 10px;
     background-color: royalblue;
-    border:2px solid black;
+    border: 2px solid black;
     border-radius: 5px;
-    /* align-items: center; */
-
-
 }
-.skillpython{
+
+.skillpython {
     width: 40px;
     height: 10px;
     background-color: royalblue;
-    border:2px solid black;
+    border: 2px solid black;
     border-radius: 5px;
-    /* align-items: center; */
-
-
 }
-.skillproblemsolving{
+
+.skillproblemsolving {
     width: 40px;
     height: 10px;
     background-color: royalblue;
-    border:2px solid black;
+    border: 2px solid black;
     border-radius: 5px;
-    /* align-items: center; */
-
 }
 
-.t100{
-    width:1000px;
+.t100 {
+    width: 1000px;
 }
-.t75{
-    width:755px;
+
+.t75 {
+    width: 755px;
 }
-.t50{
-    width:500px;
+
+.t50 {
+    width: 500px;
 }
-.t25{
-    width:250px;
+
+.t25 {
+    width: 250px;
 }
-.aboutcontainer{
-    display:flex;
+
+.aboutcontainer {
+    display: flex;
     flex-direction: column;
     height: 20vh;
     width: 75vw;
     margin: 100px auto 30px auto;
-    /* justify-content: space-around; */
     font-family: 'Josefin Sans', sans-serif;
 
-    
+
 }
 
-.skillcontainer{
-    display:flex;
+.skillcontainer {
+    display: flex;
     flex-direction: column;
     height: 30vh;
     width: 75vw;
-    margin: 30px auto ;
-    /* padding:20px; */
-    /* justify-content: space-around; */
+    margin: 30px auto;
     font-family: 'Josefin Sans', sans-serif;
 
 }
-.st{
+
+.st {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 40px;
     margin-bottom: 20px;
 }
-.info{
+
+.info {
     font-size: 40px;
     margin-left: 0px;
-    width:75vw;
+    width: 75vw;
 }
 
-.info2{
+.info2 {
     font-size: 30px;
     margin-left: 0px;
-    width:75vw;
+    width: 75vw;
 
 }
-.blk{
+
+.blk {
     font-size: 10px;
     background-color: white;
 }
 
-.projcontainer{
-    display:flex;
+.projcontainer {
+    display: flex;
     flex-direction: column;
     height: 30vh;
     width: 75vw;
     margin: 60px auto;
-    /* padding:20px; */
-    /* justify-content: space-around; */
     font-family: 'Josefin Sans', sans-serif;
 
 }
 
-@media ( max-width : 920px  ) {
-    /* *{
-        background-color: brown; 
+@media screen and (max-width: 920px) {
+    body {
+        background-color: red;
     }
-    .sidebar{
-        transform: translate(-450px,0px);
-        position: absolute;
-    }*/
-    .devpic{
+
+    .devpic img {
         display: none;
     }
 
-    .aboutcontainer{
-    margin: 100px auto 50px auto;
-
+    .aboutcontainer {
+        margin: 100px auto 50px auto;
     }
-    .skillcontainer{
-    margin: 50px auto ;
+
+    .skillcontainer {
+        margin: 50px auto;
 
     }
 }
-@media (max-width: 420px  ) {
-    /* *{
-        background-color: brown;
+
+@media screen and (max-width: 420px) {
+    body {
+        background-color: black;
     }
-    .sidebar{
-        transform: translate(-450px,0px);
-        position: absolute;
-    } */
-    .devpic{
+
+    .devpic img {
         display: none;
     }
-    .aboutcontainer{
+
+    .aboutcontainer {
         margin: 100px auto 100px auto;
-    
-        }
-        .skillcontainer{
-        margin: 50px auto ;
+    }
+
+    .skillcontainer {
+        margin: 50px auto;
     }
 }
-.sidebargo{
-    transform: translate(-450px);
+
+
+.sidebargo {
+    transform: translate(-250px);
     position: absolute;
 }
 
-.hamburger{
+.hamburger {
     position: absolute;
     cursor: pointer;
-    top:5px;
-    left:5px;
+    top: 5px;
+    left: 5px;
 }
-.x{
+
+.x {
 
     margin-left: 185px;
-    /* margin-top: 8px; */
-}
 
+}
