@@ -7,20 +7,23 @@
     padding: 0;
 }
 
-body{
+/* body{
     overflow: hidden;
-}
+} */
 .sidebar {
     background-color: rgb(192, 190, 190);
-    width: 400px;
+    /* width: 400px; */
     font-family: 'Aboreto';
     height: 100vw;
     font-weight: bolder;
+    transition: transform 0.3s ease-in;
+    position: absolute;
 
 }
 
 .sidebar nav {
     padding: 6px;
+    margin-top: 20px;
 }
 
 .sidebar nav li {
@@ -138,7 +141,6 @@ body{
     margin: 60px auto;
     padding:20px;
     /* justify-content: space-around; */
-
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -265,8 +267,7 @@ body{
     flex-direction: column;
     height: 20vh;
     width: 75vw;
-    display: flex;
-    margin: 100px auto 50px auto;
+    margin: 100px auto 30px auto;
     /* justify-content: space-around; */
     font-family: 'Josefin Sans', sans-serif;
 
@@ -278,7 +279,7 @@ body{
     flex-direction: column;
     height: 30vh;
     width: 75vw;
-    margin: 60px auto;
+    margin: 30px auto ;
     /* padding:20px; */
     /* justify-content: space-around; */
     font-family: 'Josefin Sans', sans-serif;
@@ -305,3 +306,73 @@ body{
     font-size: 10px;
     background-color: white;
 }
+
+.projcontainer{
+    display:flex;
+    flex-direction: column;
+    height: 30vh;
+    width: 75vw;
+    margin: 60px auto;
+    /* padding:20px; */
+    /* justify-content: space-around; */
+    font-family: 'Josefin Sans', sans-serif;
+
+}
+
+@media ( max-width : 920px  ) {
+    /* *{
+        background-color: brown; 
+    }
+    .sidebar{
+        transform: translate(-450px,0px);
+        position: absolute;
+    }*/
+    .devpic{
+        display: none;
+    }
+
+    .aboutcontainer{
+    margin: 100px auto 50px auto;
+
+    }
+    .skillcontainer{
+    margin: 50px auto ;
+
+    }
+}
+@media (max-width: 420px  ) {
+    /* *{
+        background-color: brown;
+    }
+    .sidebar{
+        transform: translate(-450px,0px);
+        position: absolute;
+    } */
+    .devpic{
+        display: none;
+    }
+    .aboutcontainer{
+        margin: 100px auto 100px auto;
+    
+        }
+        .skillcontainer{
+        margin: 50px auto ;
+    }
+}
+.sidebargo{
+    transform: translate(-450px);
+    position: absolute;
+}
+
+.hamburger{
+    position: absolute;
+    cursor: pointer;
+    top:5px;
+    left:5px;
+}
+.x{
+
+    margin-left: 185px;
+    /* margin-top: 8px; */
+}
+
