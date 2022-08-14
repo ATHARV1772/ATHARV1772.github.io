@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
 
 * {
 
@@ -8,28 +10,40 @@
     padding: 0;
 }
 
-/* body{
-    overflow: hidden;
-} */
+:root {
+    --primary : #F0F3BD;
+    --scendary:#02C39A ;
+    --tertiary:#00A896;
+    --quaternary:#028090;
+    --pentinary:#05668D;
+
+  }
+
+ body{
+    background-color: var(--primary);
+} 
 .sidebar {
-    background-color: rgb(192, 190, 190);
-    font-family: 'Aboreto';
+
+    font-family: 'Josefin Sans', sans-serif;
     height: 100vw;
     font-weight: bolder;
     transition: transform 0.3s ease-in;
     position: absolute;
+    background-color: var(--pentinary);
+
 
 }
 
 .sidebar nav {
     padding: 6px;
-    margin-top: 20px;
+    margin-top: 40px;
+
 }
 
 .sidebar nav li {
     list-style: none;
     font-size: 30px;
-    padding: 20px 0;
+    padding: 30px 15px 15px 5px;
 }
 
 .sidebar nav li a {
@@ -39,16 +53,20 @@
 
 .main {
     width: 85vw;
+    
+
 }
 
 .container {
     display: flex;
+
 }
 
 .infocontainer {
     height: 54vh;
     width: 75vw;
     display: flex;
+    
     margin: 100px auto;
     font-family: 'Josefin Sans', sans-serif;
 
@@ -56,7 +74,6 @@
 
 .devInfo {
     display: flex;
-
     justify-content: left;
     flex-direction: column;
 
@@ -120,8 +137,12 @@
 }
 
 .devpic img {
-    height: 30vh;
+    height:35vh;
+    margin:10%
+    
 }
+
+
 
 .contacts {
     display: flex;
@@ -170,74 +191,53 @@
 
 .skillitem {
     display: flex;
-    align-items: center;
+    /* flex-direction: column; */
     padding: 5px;
     font-size: 22px;
     font-family: 'Rubik Mono One', sans-serif;
 }
 
-.skillhtml {
-    width: 40px;
-    height: 10px;
-    background-color: royalblue;
-    border-radius: 5px;
-    border: 2px solid black;
+.skillc{
+    margin-top: 15%;
+    width:60%;
+
 }
 
-.skillcss {
-    width: 40px;
-    height: 10px;
-    background-color: royalblue;
-    border-radius: 5px;
-    border: 2px solid black;
+.skillcpp{
+    margin-top: 10%;
+    width:80%;
 }
 
-.skillc {
+.skillpy{
+    margin-top: 10%;
+    width:80%;
+}
+
+.skillhtml{
+    margin-top: 12%;
+    width:80%;
+}
+
+.skillcss{
+    margin-top: 12%;
+    width:80%;
+}
+
+.skillps{
+    margin-top: 10%;
+    width:70%;
+}
+
+
+.designskl{
+    background-image: linear-gradient(to bottom right, var(--quaternary), var(--scendary));
+    border-radius: 50%;
     width: 100px;
-    height: 10px;
-    background-color: royalblue;
-    border-radius: 5px;
-    border: 2px solid black;
-}
+    height: 100px;
+    text-align: center;
+    margin: 30px;
+    display:inline-block;
 
-.skillcpp {
-    width: 100px;
-    height: 10px;
-    background-color: royalblue;
-    border: 2px solid black;
-    border-radius: 5px;
-}
-
-.skillpython {
-    width: 40px;
-    height: 10px;
-    background-color: royalblue;
-    border: 2px solid black;
-    border-radius: 5px;
-}
-
-.skillproblemsolving {
-    width: 40px;
-    height: 10px;
-    background-color: royalblue;
-    border: 2px solid black;
-    border-radius: 5px;
-}
-
-.t100 {
-    width: 1000px;
-}
-
-.t75 {
-    width: 755px;
-}
-
-.t50 {
-    width: 500px;
-}
-
-.t25 {
-    width: 250px;
 }
 
 .aboutcontainer {
@@ -296,28 +296,49 @@
 }
 
 @media screen and (max-width: 920px) {
-    body {
-        background-color: red;
-    }
+
 
     .devpic img {
         display: none;
     }
 
     .aboutcontainer {
-        margin: 100px auto 50px auto;
+        margin: 100px auto 350px auto;
     }
 
     .skillcontainer {
-        margin: 50px auto;
+        margin: 100px auto;
+        align-items: center;
 
+    }
+    .skillitem{
+        flex-direction: column;
+    }
+    .designskl{
+        width:200px;
+        height:200px;
+    }
+    .st{
+        font-size:80px;
+    }
+    .info{
+        font-size: 70px;
+        padding-bottom:10px ;
+    }
+
+    .info2{
+        font-size: 50px;
+    }
+    .hello{
+        font-size: 70px;
+    }
+    .name{
+        font-size: 90px;
     }
 }
 
 @media screen and (max-width: 420px) {
-    body {
-        background-color: black;
-    }
+
 
     .devpic img {
         display: none;
@@ -329,6 +350,9 @@
 
     .skillcontainer {
         margin: 50px auto;
+    }
+    .skillitem{
+        flex-direction: column;
     }
 }
 
@@ -347,6 +371,7 @@
 
 .x {
 
-    margin-left: 185px;
+    margin-left: 182px;
 
 }
+
