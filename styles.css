@@ -20,16 +20,16 @@
   }
 
  body{
-    background-color: var(--primary);
+    background-color: var(--pentinary);
 } 
 .sidebar {
 
     font-family: 'Josefin Sans', sans-serif;
-    height: 100vw;
+    height: 100%;
     font-weight: bolder;
     transition: transform 0.3s ease-in;
     position: absolute;
-    background-color: var(--pentinary);
+    background-color: var(--primary);
 
 
 }
@@ -53,8 +53,6 @@
 
 .main {
     width: 85vw;
-    
-
 }
 
 .container {
@@ -101,6 +99,7 @@
 
 .buttons {
     margin: 30px;
+
 
 }
 
@@ -194,8 +193,10 @@
     /* flex-direction: column; */
     padding: 5px;
     font-size: 22px;
+    
     font-family: 'Rubik Mono One', sans-serif;
 }
+
 
 .skillc{
     margin-top: 15%;
@@ -237,6 +238,31 @@
     text-align: center;
     margin: 30px;
     display:inline-block;
+}
+
+
+.designskl:hover{
+    width: 110px;
+    height: 110px;
+    filter: drop-shadow(10px 10px 8px rgb(4, 63, 70));
+
+}
+.designcon{
+    background-image: linear-gradient(to bottom right, var(--quaternary), var(--scendary));
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin: 30px;
+    display:inline-block;
+
+
+}
+
+.designcon:hover{
+    width: 110px;
+    height: 110px;
+    filter: drop-shadow(10px 10px 8px rgb(4, 63, 70));
 
 }
 
@@ -258,7 +284,7 @@
     width: 75vw;
     margin: 30px auto;
     font-family: 'Josefin Sans', sans-serif;
-
+    /* filter: drop-shadow(10px 10px 10px rgb(73, 90, 73)); */
 }
 
 .st {
@@ -362,6 +388,8 @@
     position: absolute;
 }
 
+
+
 .hamburger {
     position: absolute;
     cursor: pointer;
@@ -375,3 +403,43 @@
 
 }
 
+.skillhkr{
+    margin-top: 10%;
+    width:80%;
+}
+.skillgfg{
+    margin-top: 10%;
+    width:80%;
+}
+.skillins{
+    margin-top: 10%;
+    width:80%;
+}
+.skilllkdn{
+    margin-top: 10%;
+    width:80%;
+}
+.skillgith{
+    margin-top: 10%;
+    width:80%;
+}
+
+.concontainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width:100vw;
+    margin: 30px auto;
+    font-family: 'Josefin Sans', sans-serif;
+
+    /* filter: drop-shadow(10px 10px 10px rgb(73, 90, 73)); */
+}
+
+.conitem {
+    display: flex;
+    /* flex-direction: column; */
+    padding: 5px;
+    font-size: 22px;
+    justify-content: center;
+    font-family: 'Rubik Mono One', sans-serif;
+}
