@@ -2,7 +2,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;1,300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap');
 
+
+::-webkit-scrollbar {
+    width:1vh;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--primary);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(11, 67, 68, 0.79);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 50, 75, 0.79);
+}
 
 * {
 
@@ -11,325 +30,363 @@
 }
 
 :root {
-    --primary : #F0F3BD;
-    --scendary:#02C39A ;
-    --tertiary:#00A896;
-    --quaternary:#028090;
-    --pentinary:#05668D;
+    --primary: #F0F3BD;
+    --scendary: #02C39A;
+    --tertiary: #00A896;
+    --quaternary: #028090;
+    --pentinary: #011721;
 
-  }
-
- body{
-    background-color: var(--pentinary);
-} 
-.sidebar {
-
-    font-family: 'Josefin Sans', sans-serif;
-    height: 100%;
-    font-weight: bolder;
-    transition: transform 0.3s ease-in;
-    position: absolute;
-    background-color: var(--primary);
-
-
-}
-
-.sidebar nav {
-    padding: 6px;
-    margin-top: 40px;
-
-}
-
-.sidebar nav li {
-    list-style: none;
-    font-size: 30px;
-    padding: 30px 15px 15px 5px;
-}
-
-.sidebar nav li a {
-    text-decoration: none;
-    color: black;
 }
 
 .main {
-    width: 85vw;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-color: var(--pentinary);
+    overflow-x: hidden;
+
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
 }
 
 .container {
     display: flex;
+    width: 100%;
 
 }
 
 .infocontainer {
-    height: 54vh;
-    width: 75vw;
+
+    width: 100%;
+    height: 100%;
     display: flex;
-    
-    margin: 100px auto;
-    font-family: 'Josefin Sans', sans-serif;
+    color: var(--primary);
+    margin: 15vh auto;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    text-align: center;
+    justify-content: center;
+
 
 }
 
 .devInfo {
     display: flex;
-    justify-content: left;
     flex-direction: column;
-
+    font-family: 'Alegreya Sans SC', sans-serif;
+    justify-content: center;
+    text-align: center;
 
 }
 
 .hello {
-    font-size: 50px;
-    margin-left: 0px;
-
+    font-size: 8vh;
+    padding-bottom: 10px;
 }
 
 .name {
-    font-size: 60px;
+    font-size: 10vh;
     font-weight: bold;
     margin: 10px 0;
-
-
 }
 
 .about {
-    font-size: 30px;
-    font-family: 'Josefin Sans', sans-serif;
+    font-size: 3vh;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    padding: 10px 0px;
 }
 
 .buttons {
     margin: 30px;
-
-
 }
 
 .btn {
-    padding: 10px 15px;
-    border-radius: 10px;
-    background-color: white;
-    color: darkolivegreen;
-    font-weight: bold;
-    font-size: 15px;
-    margin: 20px 0;
-    cursor: pointer;
-}
-
-.btn-sm {
-    border-radius: 22px;
-    font-size: 14px;
-    padding: 10px 25px;
-    margin: 20px 50px;
-    background-color: white;
-    color: rgb(1, 118, 243);
-    cursor: pointer;
-}
-
-.btn-sm:hover {
+    font-family: 'Alegreya Sans SC', sans-serif;
+    padding: 1vh 2vh;
+    border-radius: 1vh;
     color: white;
-    background-color: rgb(1, 118, 243);
+    background-color: var(--scendary);
+    font-weight: bold;
+    font-size: 2vh;
+    margin: 2vh 0;
+    cursor: pointer;
 }
+
 
 .btn:hover {
     color: white;
-    background-color: darkolivegreen;
-    ;
+    background-color: var(--tertiary);
+    transition: 200ms;
+}
+
+
+.devpic {
+    height: 35vh;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10%;
 }
 
 .devpic img {
-    height:35vh;
-    margin:10%
-    
+    height: 35vh;
+    margin-bottom: 20%;
+    border-radius: 50%;
+
 }
 
-
-
-.contacts {
-    display: flex;
-    flex-direction: column;
-    height: 30vh;
-    width: 75vw;
-    display: flex;
-    margin: 60px auto;
-    padding: 20px;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.contacts h1 {
-    font-family: 'Open Sans', sans-serif;
-    text-align: center;
-}
-
-.contacts form div {
-    padding: 10px 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.contacts form div input {
-    width: 25vw;
-    border-radius: 5px;
-    margin: 6px 0 0 0;
-    padding: 3px;
-}
-
-#emailHelp {
-    font-size: 11px;
-    color: midnightblue;
-    margin: 0 5px;
-    padding: 3px 0 0 0;
-}
-
-#form-check {
-    flex-direction: row;
-}
-
-#form-check input {
-    width: 24px;
-    margin: 3px 0;
+.devpic img:hover {
+    transition: 300ms;
+    box-shadow: 0.1vh 0.1vh 1vh rgb(95, 175, 167);
+    cursor: pointer;
 }
 
 .skillitem {
     display: flex;
-    /* flex-direction: column; */
-    padding: 5px;
-    font-size: 22px;
-    
-    font-family: 'Rubik Mono One', sans-serif;
+    font-size: 2vh;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    justify-content: center;
+    text-align: center;
 }
 
 
-.skillc{
+.skillc {
     margin-top: 15%;
-    width:60%;
-
+    width: 60%;
 }
 
-.skillcpp{
+.skillcpp {
     margin-top: 10%;
-    width:80%;
+    width: 80%;
 }
 
-.skillpy{
+.skillpy {
     margin-top: 10%;
-    width:80%;
+    width: 80%;
 }
 
-.skillhtml{
+.skillhtml {
     margin-top: 12%;
-    width:80%;
+    width: 80%;
 }
 
-.skillcss{
+.skillcss {
     margin-top: 12%;
-    width:80%;
+    width: 80%;
 }
 
-.skillps{
+.skillps {
     margin-top: 10%;
-    width:70%;
+    width: 70%;
 }
 
 
-.designskl{
+.designskl {
     background-image: linear-gradient(to bottom right, var(--quaternary), var(--scendary));
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 10vh;
+    height: 10vh;
     text-align: center;
-    margin: 30px;
-    display:inline-block;
-}
-
-
-.designskl:hover{
-    width: 110px;
-    height: 110px;
-    filter: drop-shadow(10px 10px 8px rgb(4, 63, 70));
-
-}
-.designcon{
-    background-image: linear-gradient(to bottom right, var(--quaternary), var(--scendary));
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    margin: 1vw;
+    box-shadow: 10px 10px 8px rgba(255, 0, 0, 0, );
+    justify-content: center;
     text-align: center;
-    margin: 30px;
-    display:inline-block;
-
 
 }
 
-.designcon:hover{
-    width: 110px;
-    height: 110px;
-    filter: drop-shadow(10px 10px 8px rgb(4, 63, 70));
 
-}
-
-.aboutcontainer {
-    display: flex;
-    flex-direction: column;
-    height: 20vh;
-    width: 75vw;
-    margin: 100px auto 30px auto;
-    font-family: 'Josefin Sans', sans-serif;
-
-
+.designskl:hover {
+    box-shadow: 0.1vh 0.1vh 0.8vh rgb(136, 251, 240);
+    transition: 200ms;
 }
 
 .skillcontainer {
     display: flex;
     flex-direction: column;
     height: 30vh;
-    width: 75vw;
+    width: 100%;
     margin: 30px auto;
-    font-family: 'Josefin Sans', sans-serif;
-    /* filter: drop-shadow(10px 10px 10px rgb(73, 90, 73)); */
+    color: var(--primary);
+    font-family: 'Alegreya Sans SC', sans-serif;
+    justify-content: center;
+    text-align: center;
 }
 
-.st {
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 40px;
-    margin-bottom: 20px;
+.designcon {
+    background-image: linear-gradient(to bottom right, var(--quaternary), var(--scendary));
+    border-radius: 50%;
+    width: 3vw;
+    height: 3vw;
+    text-align: center;
+    margin: 1vw;
+    display: inline-block;
+    font-family: 'Alegreya Sans SC', sans-serif;
+
 }
+
+.designcon:hover {
+    transition: 200ms;
+    box-shadow: 0.1vh 0.1vh 0.8vh rgb(136, 251, 240);
+}
+
+.aboutcontainer {
+    display: flex;
+    flex-direction: column;
+    height: 10vh;
+    width: 100%;
+    margin: 100px auto 30px auto;
+    color: var(--primary);
+    font-family: 'Alegreya Sans SC', sans-serif;
+    justify-content: center;
+    text-align: center;
+}
+
 
 .info {
-    font-size: 40px;
-    margin-left: 0px;
-    width: 75vw;
+    font-size: 5vh;
+    width: 100%;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    justify-content: center;
+    text-align: center;
+
+
 }
 
 .info2 {
-    font-size: 30px;
+    font-size: 4vh;
     margin-left: 0px;
-    width: 75vw;
-
+    width: 100%;
+    justify-content: center;
+    text-align: center;
 }
 
-.blk {
-    font-size: 10px;
-    background-color: white;
-}
+
 
 .projcontainer {
     display: flex;
     flex-direction: column;
-    height: 30vh;
-    width: 75vw;
-    margin: 60px auto;
-    font-family: 'Josefin Sans', sans-serif;
+    width: 100%;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    justify-content: center;
+    text-align: center;
 
 }
 
-@media screen and (max-width: 920px) {
+/* @media screen and (max-width: 920px) {
 
 
     .devpic img {
-        display: none;
+        height: 25vh;
+        margin: 10px;
+
+    }
+
+    .aboutcontainer {
+        margin: 10vh auto 30vh auto;
+    }
+
+    .skillcontainer {
+        margin: 100px auto;
+        align-items: center;
+        width: 100vw
+    }
+
+    .skillitem {
+        /* flex-direction: column; 
+        align-items: center;
+        justify-content: center;
+    }
+
+    .designskl {
+        width: 10vh;
+        height: 10vh;
+    }
+
+    .st {
+        font-size: 80px;
+    }
+
+    .info {
+        font-size: 60px;
+        padding-bottom: 10px;
+    }
+
+    .info2 {
+        font-size: 40px;
+    }
+
+    .hello {
+        font-size: 60px;
+    }
+
+    .name {
+        font-size: 70px;
+    }
+
+}
+
+@media screen and (max-width: 420px) {
+    .infocontainer {
+        width: 100vw;
+        height: 80vh;
+        margin: 10vh auto 0 auto;
+        flex-direction: column;
+    }
+
+    .devInfo {
+        text-align: left;
+        height: 250px;
+        margin: 0 10px;
+    }
+
+    .name {
+        font-size: 40px;
+        margin: 5px auto;
+    }
+
+    .hello {
+        font-size: 25px;
+    }
+
+    .about {
+        font-size: 15px;
+    }
+
+    .devpic img {
+        height: 10vh;
+        margin: 10px;
+
+    }
+
+    .buttons {
+        margin: 2px;
+
+    }
+
+    .btn {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 10px;
+        margin: 5px 0;
     }
 
     .aboutcontainer {
         margin: 100px auto 350px auto;
+
+    }
+
+    .info {
+        font-size: 10px;
+    }
+
+    .info2 {
+        font-size: 15px;
     }
 
     .skillcontainer {
@@ -337,109 +394,88 @@
         align-items: center;
 
     }
-    .skillitem{
+
+    .skillitem {
         flex-direction: column;
     }
-    .designskl{
-        width:200px;
-        height:200px;
-    }
-    .st{
-        font-size:80px;
-    }
-    .info{
-        font-size: 70px;
-        padding-bottom:10px ;
+
+    .designskl {
+        width: 100px;
+        height: 100px;
     }
 
-    .info2{
+    .st {
+        font-size: 80px;
+    }
+
+    .info {
+        font-size: 70px;
+        padding-bottom: 10px;
+    }
+
+    .info2 {
         font-size: 50px;
     }
-    .hello{
-        font-size: 70px;
-    }
-    .name{
-        font-size: 90px;
-    }
-}
 
-@media screen and (max-width: 420px) {
+} */
 
 
-    .devpic img {
-        display: none;
-    }
-
-    .aboutcontainer {
-        margin: 100px auto 100px auto;
-    }
-
-    .skillcontainer {
-        margin: 50px auto;
-    }
-    .skillitem{
-        flex-direction: column;
-    }
-}
-
-
-.sidebargo {
-    transform: translate(-250px);
-    position: absolute;
-}
-
-
-
-.hamburger {
-    position: absolute;
-    cursor: pointer;
-    top: 5px;
-    left: 5px;
-}
-
-.x {
-
-    margin-left: 182px;
-
-}
-
-.skillhkr{
+.skillhkr {
     margin-top: 10%;
-    width:80%;
+    width: 80%;
 }
-.skillgfg{
+
+.skillgfg {
     margin-top: 10%;
-    width:80%;
+    width: 80%;
 }
-.skillins{
+
+.skillins {
     margin-top: 10%;
-    width:80%;
+    width: 80%;
 }
-.skilllkdn{
+
+.skilllkdn {
     margin-top: 10%;
-    width:80%;
+    width: 80%;
 }
-.skillgith{
+
+.skillgith {
     margin-top: 10%;
-    width:80%;
+    width: 80%;
 }
 
 .concontainer {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    width:100vw;
-    margin: 30px auto;
-    font-family: 'Josefin Sans', sans-serif;
-
-    /* filter: drop-shadow(10px 10px 10px rgb(73, 90, 73)); */
+    width: 100%;
+    padding: 2vh 0;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    text-align: center;
+    background-color: #000000;
+    margin-top: 2vh;
 }
 
 .conitem {
     display: flex;
-    /* flex-direction: column; */
-    padding: 5px;
-    font-size: 22px;
     justify-content: center;
-    font-family: 'Rubik Mono One', sans-serif;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    text-align: center;
+    margin-top: 2vh;
+
+}
+
+.conmail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Alegreya Sans SC', sans-serif;
+}
+
+
+.blk {
+    text-align: center;
+    width: 100vw;
+    margin: 1vh 0;
+    font-size: 2vh;
 }
