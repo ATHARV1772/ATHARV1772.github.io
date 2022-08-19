@@ -3,10 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;1,300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
 
 
 ::-webkit-scrollbar {
-    width:1vh;
+    width: 0.5vw;
 }
 
 /* Track */
@@ -44,14 +45,18 @@
 }
 
 body {
+    text-align: center;
+    justify-content: center;
     background-color: var(--pentinary);
     overflow-x: hidden;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
 
 }
 
 .main {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+
     text-align: center;
     justify-content: center;
 }
@@ -64,12 +69,13 @@ body {
 
 .infocontainer {
 
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 91vh;
     display: flex;
     color: var(--primary);
-    margin: 15vh auto;
-    font-family: 'Alegreya Sans SC', sans-serif;
+    margin: 4vh auto 5vh auto;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
     text-align: center;
     justify-content: center;
 
@@ -79,42 +85,45 @@ body {
 .devInfo {
     display: flex;
     flex-direction: column;
-    font-family: 'Alegreya Sans SC', sans-serif;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
     justify-content: center;
     text-align: center;
 
 }
 
 .hello {
-    font-size: 8vh;
-    padding-bottom: 10px;
+    font-size: 3vw;
+    padding-bottom: 0.5vh;
 }
 
 .name {
-    font-size: 10vh;
+    font-size: 5vw;
     font-weight: bold;
-    margin: 10px 0;
+    margin: 0.5vh 0;
 }
 
 .about {
-    font-size: 3vh;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    padding: 10px 0px;
+    font-size: 2vw;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
+    padding: 0.5vh 0px;
 }
 
 .buttons {
-    margin: 30px;
+    margin: 3vh;
 }
 
 .btn {
-    font-family: 'Alegreya Sans SC', sans-serif;
-    padding: 1vh 2vh;
-    border-radius: 1vh;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
+    padding: 1.6vh 1.6vw;
+    border-radius: 0.6vw;
     color: white;
     background-color: var(--scendary);
     font-weight: bold;
-    font-size: 2vh;
-    margin: 2vh 0;
+    font-size: 1.4vw;
+    margin: 1.8vh 0;
     cursor: pointer;
 }
 
@@ -130,352 +139,433 @@ body {
     height: 35vh;
     justify-content: center;
     text-align: center;
-    margin-bottom: 10%;
+    margin-bottom: 15%;
 }
 
 .devpic img {
-    height: 35vh;
+    height: 20vw;
     margin-bottom: 20%;
-    border-radius: 50%;
 
 }
 
 .devpic img:hover {
     transition: 300ms;
-    box-shadow: 0.1vh 0.1vh 1vh rgb(95, 175, 167);
-    cursor: pointer;
+    height: 20.5vw;
+    filter: drop-shadow(0.1vw 0.1vw 0.4vw rgb(40, 81, 77));
+
+}
+
+.half {
+    display: flex;
+    width: 100vw;
+    height: 50vh;
+    text-align: center;
+    justify-content: center;
+
+}
+
+
+.aboutcontainer {
+    display: flex;
+    flex-direction: column;
+    height: 10vh;
+    width: 50vw;
+    margin:8vw 0;
+    color: var(--primary);
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
+    justify-content: center;
+    text-align: justify;
+}
+
+.info{
+    width:30vw;
+    margin: 1vh;
+    font-size: 1.5vw;
+
+}
+
+
+.Profile {
+    width: 50vw;
+    justify-content: center;
+    text-align: right;
+    margin: 1vh 1vh;
+}
+
+.Profile img {
+    width: 30vw;
+    height: 22vw;
+    border-radius: 1vw;
+    justify-content: center;
+    text-align: center;
+    margin:  0 2vh ;
+
+}
+
+
+
+.skillcontainer {
+    display: flex;
+    flex-direction: column;
+    height: 25vh;
+    width: 100vw;
+    margin: 2vh auto 1.5vh auto;
+    font-size: 3vw;
+    color: var(--primary);
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
 }
 
 .skillitem {
     display: flex;
-    font-size: 2vh;
-    font-family: 'Alegreya Sans SC', sans-serif;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
     justify-content: center;
     text-align: center;
 }
 
 
 .skillc {
-    margin-top: 15%;
-    width: 60%;
-}
-
-.skillcpp {
-    margin-top: 10%;
-    width: 80%;
-}
-
-.skillpy {
-    margin-top: 10%;
-    width: 80%;
-}
-
-.skillhtml {
-    margin-top: 12%;
-    width: 80%;
-}
-
-.skillcss {
-    margin-top: 12%;
-    width: 80%;
-}
-
-.skillps {
-    margin-top: 10%;
-    width: 70%;
+    margin: 0.5vw;
+    width: 4.5vw;
+    height: 4.5vw;
 }
 
 
-.designskl {
-    background-image: linear-gradient(to bottom right, var(--quaternary), var(--scendary));
-    border-radius: 50%;
-    width: 10vh;
-    height: 10vh;
-    text-align: center;
-    margin: 1vw;
-    box-shadow: 10px 10px 8px rgba(255, 0, 0, 0, );
-    justify-content: center;
-    text-align: center;
 
+.skillc:hover {
+    transition: 300ms;
+    filter: drop-shadow(0.1vw 0.1vw 0.2vw rgb(32, 64, 61));
 }
-
-
-.designskl:hover {
-    box-shadow: 0.1vh 0.1vh 0.8vh rgb(136, 251, 240);
-    transition: 200ms;
-}
-
-.skillcontainer {
-    display: flex;
-    flex-direction: column;
-    height: 30vh;
-    width: 100%;
-    margin: 30px auto;
-    color: var(--primary);
-    font-family: 'Alegreya Sans SC', sans-serif;
-    justify-content: center;
-    text-align: center;
-}
-
-.designcon {
-    background-image: linear-gradient(to bottom right, var(--quaternary), var(--scendary));
-    border-radius: 50%;
-    width: 3vw;
-    height: 3vw;
-    text-align: center;
-    margin: 1vw;
-    display: inline-block;
-    font-family: 'Alegreya Sans SC', sans-serif;
-
-}
-
-.designcon:hover {
-    transition: 200ms;
-    box-shadow: 0.1vh 0.1vh 0.8vh rgb(136, 251, 240);
-}
-
-.aboutcontainer {
-    display: flex;
-    flex-direction: column;
-    height: 10vh;
-    width: 100%;
-    margin: 100px auto 30px auto;
-    color: var(--primary);
-    font-family: 'Alegreya Sans SC', sans-serif;
-    justify-content: center;
-    text-align: center;
-}
-
-
-.info {
-    font-size: 5vh;
-    width: 100%;
-    font-family: 'Alegreya Sans SC', sans-serif;
-    justify-content: center;
-    text-align: center;
-
-
-}
-
-.info2 {
-    font-size: 4vh;
-    margin-left: 0px;
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-}
-
 
 
 .projcontainer {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    font-family: 'Alegreya Sans SC', sans-serif;
+    width: 100vw;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
     justify-content: center;
     text-align: center;
 
-}
-
-/* @media screen and (max-width: 920px) {
-
-
-    .devpic img {
-        height: 25vh;
-        margin: 10px;
-
-    }
-
-    .aboutcontainer {
-        margin: 10vh auto 30vh auto;
-    }
-
-    .skillcontainer {
-        margin: 100px auto;
-        align-items: center;
-        width: 100vw
-    }
-
-    .skillitem {
-        /* flex-direction: column; 
-        align-items: center;
-        justify-content: center;
-    }
-
-    .designskl {
-        width: 10vh;
-        height: 10vh;
-    }
-
-    .st {
-        font-size: 80px;
-    }
-
-    .info {
-        font-size: 60px;
-        padding-bottom: 10px;
-    }
-
-    .info2 {
-        font-size: 40px;
-    }
-
-    .hello {
-        font-size: 60px;
-    }
-
-    .name {
-        font-size: 70px;
-    }
-
-}
-
-@media screen and (max-width: 420px) {
-    .infocontainer {
-        width: 100vw;
-        height: 80vh;
-        margin: 10vh auto 0 auto;
-        flex-direction: column;
-    }
-
-    .devInfo {
-        text-align: left;
-        height: 250px;
-        margin: 0 10px;
-    }
-
-    .name {
-        font-size: 40px;
-        margin: 5px auto;
-    }
-
-    .hello {
-        font-size: 25px;
-    }
-
-    .about {
-        font-size: 15px;
-    }
-
-    .devpic img {
-        height: 10vh;
-        margin: 10px;
-
-    }
-
-    .buttons {
-        margin: 2px;
-
-    }
-
-    .btn {
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-weight: bold;
-        font-size: 10px;
-        margin: 5px 0;
-    }
-
-    .aboutcontainer {
-        margin: 100px auto 350px auto;
-
-    }
-
-    .info {
-        font-size: 10px;
-    }
-
-    .info2 {
-        font-size: 15px;
-    }
-
-    .skillcontainer {
-        margin: 100px auto;
-        align-items: center;
-
-    }
-
-    .skillitem {
-        flex-direction: column;
-    }
-
-    .designskl {
-        width: 100px;
-        height: 100px;
-    }
-
-    .st {
-        font-size: 80px;
-    }
-
-    .info {
-        font-size: 70px;
-        padding-bottom: 10px;
-    }
-
-    .info2 {
-        font-size: 50px;
-    }
-
-} */
-
-
-.skillhkr {
-    margin-top: 10%;
-    width: 80%;
-}
-
-.skillgfg {
-    margin-top: 10%;
-    width: 80%;
-}
-
-.skillins {
-    margin-top: 10%;
-    width: 80%;
-}
-
-.skilllkdn {
-    margin-top: 10%;
-    width: 80%;
-}
-
-.skillgith {
-    margin-top: 10%;
-    width: 80%;
 }
 
 .concontainer {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    padding: 2vh 0;
-    font-family: 'Alegreya Sans SC', sans-serif;
+    width: 100vw;
+    padding: 0.5vw 0;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
     text-align: center;
-    background-color: #000000;
-    margin-top: 2vh;
+    justify-content: center;
+    background-color: #267281;
+    margin-top: 0.5vw;
 }
 
 .conitem {
     display: flex;
     justify-content: center;
-    font-family: 'Alegreya Sans SC', sans-serif;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
     text-align: center;
-    margin-top: 2vh;
+    margin-top: 1vw;
 
 }
 
 .conmail {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
-    font-family: 'Alegreya Sans SC', sans-serif;
+    text-align: center;
+    /*  font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
+    width: 30vw;
+    margin: 1vw 35vw;
+    height: 5vh;
+    background-color: #02202e;
+    padding-top: 2vh;
+    border-radius: 1vh;
 }
 
+.conmail a {
+    text-decoration: none;
+    color: rgb(128, 182, 183);
+    justify-content: center;
+    text-align: center;
+}
 
 .blk {
     text-align: center;
+    justify-content: center;
     width: 100vw;
-    margin: 1vh 0;
-    font-size: 2vh;
+    margin: 1vw 0;
+    font-size: 1.2vw;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
+
+}
+
+.designcon {
+    background-image: linear-gradient(to bottom right, var(--quaternary), var(--scendary));
+    border-radius: 50%;
+    width: 5vw;
+    height: 5vw;
+    text-align: center;
+    margin: 1vw;
+    display: inline-block;
+    /* font-family: 'Alegreya Sans SC', sans-serif; */
+    font-family: 'Play', sans-serif;
+
+}
+
+.designcon:hover {
+    transition: 200ms;
+    box-shadow: 0.1vw 0.1vw 0.4vw rgb(136, 251, 240);
+}
+
+
+.social {
+    margin: 0 1vw;
+    width: 6vh;
+}
+
+.social:hover {
+    transition: 300ms;
+    filter: drop-shadow(0.01vw 0.01vw 0.05vw rgb(0, 0, 0));
+}
+
+@media screen and (max-width:1050px) {
+    .infocontainer{
+        height: 53vw;
+    }
+    .devpic{
+        height: 30vw;
+        margin:0.1vh auto 0.1vh auto;
+        justify-content: center;
+    
+    }
+    .devpic img{
+        height:28vw;
+    }
+    .devpic img:hover{
+        height:29vw;
+        filter: drop-shadow(0.5vw 0.5vw 1vw rgb(40, 81, 77));
+    }
+    .hello{
+        font-size: 4vw;
+    }
+
+    .name {
+        font-size: 6vw;
+    }
+    
+    .about {
+        font-size: 3vw;
+
+    }
+    .btn{
+        padding: 1vh 3vw;
+        border-radius: 1vh;
+        font-size: 2vw;
+        margin: 1.8vh 0;
+    }
+    .Profile img {
+        width:40vw;
+        height:29vw;
+        border-radius: 1vh;
+    }
+    .info{
+        font-size: 2vw;
+        width: 30vw;
+        margin-top: 3vh;
+    }
+    .aboutcontainer{
+        height:10vh;
+    }
+    .skillcontainer{
+        height:30vh;
+    }
+
+    .conmail{
+        height:5vh;
+        width:50vw;
+        margin:1vh 25vw;
+        justify-content: center;
+        text-align: center;
+        padding-top: 1.5vh;
+    }
+    .skillc{
+        margin: 0.5vw;
+        width: 7vw;
+        height: 7vw;
+    }
+    .blk{
+        font-size: 2vw;
+        justify-content: center;
+        text-align: center;
+    }
+    .social{
+        width: 5vh;
+        margin: 0 3vw;
+    }
+}
+
+@media screen and (max-width:850px) {
+    .infocontainer{
+        height:100vw;
+    }
+    .devpic{
+        height: 50vw;
+        margin:0.1vh auto 0.1vh auto;
+        justify-content: center;
+    
+    }
+    .devpic img{
+        height:40vw;
+    }
+    .devpic img:hover{
+        height:41vw;
+        filter: drop-shadow(0.5vw 0.5vw 1vw rgb(40, 81, 77));
+
+    }
+
+    .hello{
+        font-size: 8vw;
+        padding-bottom: 0;
+    }
+    .name{
+        font-size: 10vw;
+    }
+    .about
+    {
+        font-size: 4vw;
+    }
+    .btn{
+        padding: 1vh 1.6vw;
+        border-radius: 0.8vw;
+        font-size: 2vw;
+        margin: 1.8vh 0;
+    }
+    .half{
+        height: 20vh;
+        margin:5vh 0;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+    .Profile{
+        width: 100vw;
+        margin:0;
+        justify-content: center;
+        text-align: center;
+    }
+    .Profile img {
+        width:50vw;
+        height:33vw;
+        border-radius: 2vw;
+    }
+    .aboutcontainer{
+        width: 100vw;
+        justify-content: center;
+        align-items: center;
+    }
+    .info{
+        width: 50vw;
+        font-size: 3vw;
+        text-align: center;
+    }
+    .skillcontainer{
+        font-size: 8vw;
+        margin: 2vh auto 0 auto;
+
+    }
+    .skillc{
+        width:10vw;
+        height: 10vw;
+        margin:1.5vw 1.5vw 0 1.5vw;
+    }
+    .skillc:hover{
+    filter: drop-shadow(1vw 1vw 2vw rgb(32, 64, 61));
+    }
+    .conmail{
+        width:50vw;
+        margin:1vh 25vw;
+    }
+    .blk{
+        font-size: 3vw;
+    }
+    .social{
+        width: 4vh;
+        margin:0 2vw;
+    }
+    .social:hover{
+    filter: drop-shadow(0.1vw 0.1vw 0.2vw rgb(0, 0, 0));
+
+    }
+
+
+}
+
+@media screen and (max-width:420px) {
+    .devpic{
+        height: 60vw;
+        margin:0.1vh auto 0.1vh auto;
+        justify-content: center;
+    
+    }
+    .devpic img{
+        height:50vw;
+    }
+    .devpic img:hover{
+        height:51vw;
+        filter: drop-shadow(0.5vw 0.5vw 1vw rgb(40, 81, 77));
+    }
+    .btn{
+        padding: 1vh 3vw;
+        border-radius: 1.6vw;
+        font-size: 3vw;
+        margin: 1.8vh 0;
+    }
+    .Profile img {
+        width:60vw;
+        height:40vw;
+        border-radius: 2vw;
+    }
+    .info{
+        font-size: 4vw;
+        width: 60vw;
+        margin-top: 3vh;
+    }
+    .aboutcontainer{
+        height:7vh;
+    }
+    .skillcontainer{
+        height:15vh;
+    }
+    .skillc{
+        margin:1.5vw 3vw 0 1.5vw;
+    }
+    .conmail{
+        height:4vh;
+        width:60vw;
+        margin:1vh 20vw;
+        justify-content: center;
+        text-align: center;
+        padding-top: 1.5vh;
+
+    }
+    .blk{
+        font-size: 5vw;
+        justify-content: center;
+        text-align: center;
+    }
+    .social{
+        width: 3vh;
+        margin: 0 3vw;
+    }
 }
