@@ -1,0 +1,31 @@
+/* Motion in the paintings: CSS keyframes on transform and opacity only.
+   A painting off screen gets .is-still (hooks/useInView.js), which pauses everything inside it,
+   and site.css stops all of it for visitors who prefer reduced motion. */
+.farmer-bend { transform-origin: 0 0; animation: farmer-bend 7s ease-in-out infinite; }
+@keyframes farmer-bend { 0%, 14% { transform: rotate(0deg); } 30%, 50% { transform: rotate(64deg); } 66%, 100% { transform: rotate(0deg); } }
+.farmer-ripple ellipse { transform-box: fill-box; transform-origin: center; opacity: 0; animation: ripple 7s ease-out infinite; }
+.farmer-ripple ellipse + ellipse { animation-delay: 0.45s; }
+@keyframes ripple { 0%, 34% { transform: scale(0.3); opacity: 0; } 40% { opacity: 0.9; } 72%, 100% { transform: scale(1.7); opacity: 0; } }
+.train { animation: train 32s linear infinite; }
+@keyframes train { from { transform: translateX(-1000px); } to { transform: translateX(2000px); } }
+.rower { animation: rower 70s linear infinite; }
+@keyframes rower { from { transform: translateX(-1000px); } to { transform: translateX(1600px); } }
+.oar { transform-origin: 0 0; animation: oar 2.6s ease-in-out infinite; }
+@keyframes oar { 0%, 100% { transform: rotate(-16deg); } 50% { transform: rotate(16deg); } }
+.boat { animation: boat 44s linear infinite; }
+@keyframes boat { from { transform: translateX(-1300px); } to { transform: translateX(1300px); } }
+.swell { animation: swell 6s ease-in-out infinite; }
+@keyframes swell { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.spray { animation: twinkle 1.8s ease-in-out infinite alternate; }
+.shimmer { animation: twinkle 3s ease-in-out infinite alternate; }
+@keyframes twinkle { from { opacity: 0.5; } to { opacity: 0.95; } }
+.smoke { transform-box: fill-box; transform-origin: 50% 100%; animation: smoke 4s ease-out infinite; }
+@keyframes smoke { 0% { opacity: 0; transform: translateY(4px) scaleY(0.7); } 40% { opacity: 0.55; } 100% { opacity: 0; transform: translateY(-8px) scaleY(1.1); } }
+.homeward { animation: homeward 34s linear infinite; }
+@keyframes homeward { from { transform: translateX(0); } to { transform: translateX(700px); } }
+/* The pool: a sheet of ripples slides across it, and the bright squiggles on top sway and shimmer */
+.pool-run { animation: pool-run 10s linear infinite; }
+@keyframes pool-run { to { transform: translateX(160px); } }
+.ripple-drift { animation: ripple-drift 5s ease-in-out infinite alternate; }
+@keyframes ripple-drift { 0% { transform: translateX(-24px); opacity: 0.45; } 50% { opacity: 0.85; } 100% { transform: translateX(24px); opacity: 0.6; } }
+.is-still * { animation-play-state: paused !important; }

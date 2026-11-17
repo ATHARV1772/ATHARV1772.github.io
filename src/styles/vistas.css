@@ -1,0 +1,13 @@
+/* Vistas: wide strips of painting between sections that pan sideways as you scroll (hooks/useScrollPan.js).
+   Both paintings' strips are in the page; data-art on <html> shows one. */
+.vista { position: relative; height: clamp(170px, 22vw, 320px); overflow: hidden; border-bottom: 3px solid var(--line); background: var(--outer); }
+.vista-track { height: 100%; display: flex; will-change: transform; }
+.vista-art, .band { height: 100%; width: auto; flex: none; }
+.vista-fields, :root[data-art="fields"] .vista-coast { display: none; }
+:root[data-art="fields"] .vista-fields { display: block; }
+.band-vista { height: clamp(120px, 15vw, 240px); margin: 52px -28px 0; border-bottom: 0; background: transparent; }
+
+@media (max-width: 760px) {
+  .band-vista { margin: 40px -16px 0; }
+  .vista { height: 190px; }
+}

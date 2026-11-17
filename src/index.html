@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--head-->
+<meta name="theme-color" content="#E9DFCC">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  /* Paint the right painting and time of day before React loads, so there is no flash. Auto follows the visitor's clock (same windows as src/lib/time.js). */
+  (function () {
+    var mode = "auto", art = "coast";
+    try { mode = localStorage.getItem("mode") || "auto"; art = localStorage.getItem("art") === "fields" ? "fields" : "coast"; } catch (e) {}
+    if (["auto", "day", "golden", "night"].indexOf(mode) < 0) mode = "auto";
+    var now = new Date(), h = now.getHours() + now.getMinutes() / 60;
+    var phase = (h >= 5.5 && h < 7) || (h >= 16.5 && h < 19) ? "golden" : h >= 7 && h < 16.5 ? "day" : "night";
+    var scene = mode === "auto" ? phase : mode;
+    var d = document.documentElement;
+    d.dataset.art = art; d.dataset.mode = mode; d.dataset.scene = scene;
+    d.dataset.theme = scene === "night" ? "night" : "day";
+    d.className = "js";
+  })();
+</script>
+<!--css-->
+</head>
+<body>
+<div id="root"><!--app--></div>
+<!--js-->
+</body>
+</html>

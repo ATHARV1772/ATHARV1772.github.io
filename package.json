@@ -1,0 +1,22 @@
+{
+  "name": "atharv1772.github.io",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Portfolio of Atharv Shinde: React + Redux Toolkit, pre-rendered on Node, with two paintings drawn in SVG.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node scripts/run-tests.mjs",
+    "test:dist": "node --test --test-reporter=spec tests/dist/site.test.mjs",
+    "preview": "python3 -m http.server 8000 --directory dist"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-redux": "^9.2.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}

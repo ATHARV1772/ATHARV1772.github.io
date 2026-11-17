@@ -1,0 +1,54 @@
+/* Project cards in "Selected work": the sizes site.css doesn't define, and the visual inside each card.
+   .card.wide and .card.full are in site.css, next to their mobile overrides. */
+.card.side { grid-column: span 5; }
+.c-ink .strip { background: var(--ink); color: var(--paper); }
+.card .note { font: 500 12px/1.5 var(--mono); color: var(--muted); border-left: 3px solid var(--accent-ink); padding-left: 10px; }
+
+@media (max-width: 1180px) {
+  .card.side { grid-column: span 12; }
+}
+
+/* Thesis: hospitals keep their scans, one shared model */
+.fedmap svg { width: 100%; height: auto; }
+.fedmap text { font: 500 12px var(--mono); fill: var(--ink); }
+.fedmap .dim { fill: var(--muted); }
+.fedmap .box { fill: var(--card); stroke: var(--line); stroke-width: 2; }
+.fedmap .xray { fill: var(--ink); }
+.fedmap .ribs { fill: none; stroke: var(--paper); stroke-width: 1.6; }
+.fedmap .flow { fill: none; stroke: var(--ink); stroke-width: 2; stroke-dasharray: 6 6; animation: flow 1.6s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -24; } }
+.fedmap .model { fill: var(--accent-4); stroke: var(--line); stroke-width: 2.5; }
+.fedmap .model-label { font-weight: 700; fill: var(--on-accent); }
+.fedmap .out { stroke: var(--ink); stroke-width: 2.5; }
+
+/* AdaptFedMLP: each hospital labels one bleed type */
+.label-matrix { width: 100%; border-collapse: collapse; font: 500 12px/1 var(--mono); text-align: center; }
+.label-matrix caption { caption-side: bottom; text-align: left; padding-top: 10px; color: var(--muted); font: 500 12px/1.4 var(--mono); }
+.label-matrix th, .label-matrix td { padding: 7px 4px; border: 2px solid var(--line); }
+.label-matrix thead th { font-weight: 700; }
+.label-matrix td.known { background: var(--accent-2); color: var(--on-accent); font-weight: 700; }
+.label-matrix td.unknown { color: var(--muted); }
+
+/* This site: a live view of the Redux store */
+.store-viz { display: grid; gap: 10px; }
+.store-viz pre { margin: 0; font: 500 12.5px/1.5 var(--mono); background: var(--ink); color: var(--paper); padding: 10px 12px; border-radius: calc(var(--radius) * 0.5); overflow-x: auto; }
+.store-viz.large pre { font-size: 14px; }
+.action-log { display: grid; gap: 4px; font: 500 11.5px/1.35 var(--mono); }
+.action-log li { padding: 5px 8px; border: 2px solid var(--line); background: var(--card); overflow-wrap: anywhere; border-radius: calc(var(--radius) * 0.4); }
+.action-log li b { color: var(--accent-2-ink); }
+.action-log .empty { color: var(--muted); border-style: dashed; }
+.store-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.store-controls .art-switch { position: static; }
+
+/* Thesis card: a report blacked out until the paper is out */
+.redacted { position: relative; display: grid; gap: 8px; margin-top: 14px; padding: 14px 14px 16px; border: 2px dashed var(--line); border-radius: calc(var(--radius) * 0.5); font: 500 12px/1.4 var(--mono); }
+.redacted p { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.redacted b { text-transform: uppercase; margin-right: 4px; }
+.redacted .bar { display: inline-block; height: 12px; background: var(--ink); border-radius: 2px; }
+.redacted .stamp { position: absolute; right: 12px; bottom: -11px; padding: 3px 8px; background: var(--accent); color: var(--on-accent); border: 2px solid var(--line); font-weight: 700; text-transform: uppercase; transform: rotate(-2deg); border-radius: var(--radius-chip); }
+
+/* Paired cards end at the same height: the visual in the shorter card grows to fill the gap
+   (content centred inside it; the store panel keeps its log at the top) instead of leaving empty space at the bottom */
+.card:not(.full) .card-in { grid-template-rows: auto auto 1fr; }
+.card:not(.full) .card-in > .viz { display: grid; align-content: center; }
+.card.c-ink .card-in > .store-viz { align-content: start; }

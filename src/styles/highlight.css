@@ -1,0 +1,9 @@
+/* Skills, projects and proof light each other up (store/highlightSlice.js).
+   Project cards and skill chips use .is-linked and .is-lit in site.css; this file covers Core CS,
+   whose chips point to the exam row in Academics and the entry in Experience instead of a project. */
+.skill-group.wide { border-bottom: 2px solid var(--line); }
+.skill-group:last-child { border-bottom: 0; }
+.board tr th, .board tr td { transition: background-color var(--snap), color var(--snap); }
+.board tr.is-lit th, .board tr.is-lit td { background: var(--accent-2); color: var(--on-accent); }
+.entry h3 { transition: background-color var(--snap), color var(--snap), box-shadow var(--snap); }
+.entry.is-lit h3 { display: inline; background: var(--accent-2); color: var(--on-accent); box-shadow: 0 0 0 4px var(--accent-2); }

@@ -1,0 +1,129 @@
+/* Design tokens. data-art picks the painting and the whole palette, data-theme picks light or dark,
+   data-scene picks the time of day inside the painting. All three live on <html>. */
+:root {
+  --paper: #F5EFE4; --outer: #E9DFCC; --card: #FBF7EF;
+  --ink: #14161C; --ink-2: #34343B; --muted: #5F5A53;
+  --line: #14161C; --shadow: #14161C; --on-accent: #14161C;
+  /* Accents sit behind dark text only. accent-2-strong is a fill, never text */
+  --accent: #FF6B8B; --accent-3: #FF9A5A; --accent-2-strong: #00A3E0; --accent-2: #7FD8F4; --accent-4: #C9BBFF;
+  /* Deeper versions for lines, icons and focus rings on the paper (4.5:1 or better) */
+  --accent-ink: #C2264F; --accent-2-ink: #006C96;
+  --city-back: #F7C2CE; --city-front: #6CC4E4; --city-win: #FFFFFF; --city-win-op: 0.55; --train-win: #14161C;
+  --display: "Archivo", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "DejaVu Sans Mono", monospace;
+  --snap: 90ms linear;
+  color-scheme: light;
+}
+:root[data-theme="night"] {
+  --paper: #17163A; --outer: #0C0B22; --card: #211F4A;
+  --ink: #F5EFE4; --ink-2: #DCD5EA; --muted: #A9A3C4;
+  --line: #F5EFE4; --shadow: #00B8F0;
+  --accent-2: #62D3F5; --accent-4: #B7A6FF;
+  --accent-ink: #FF6B8B; --accent-2-ink: #62D3F5;
+  --city-back: #2A2660; --city-front: #0F0E2B; --city-win: #FFC66B; --city-win-op: 1; --train-win: #FFE6B0;
+  color-scheme: dark;
+}
+/* Fields: rice green, rapeseed yellow, monsoon blue */
+:root[data-art="fields"] {
+  --paper: #F4F3E6; --outer: #E3E8D2; --card: #FBFBF3;
+  --ink: #15241A; --ink-2: #33433A; --muted: #56645A;
+  --line: #15241A; --shadow: #15241A; --on-accent: #15241A;
+  --accent: #F2C12E; --accent-3: #7CCB5B; --accent-2-strong: #2F7FD8; --accent-2: #9FD9F2; --accent-4: #F4A6C0;
+  --accent-ink: #B23A1E; --accent-2-ink: #1F5FAF;
+  --furrow-a: #8BD46A; --furrow-b: #6CC250;
+  --fb-back: #CFE3B5; --fb-mid: #8CC46E; --fb-front: #2E6B45; --fb-trunk: #5A4632; --fb-wall: #FFFFFF; --fb-roof: #D9573B; --fb-win: #9FD9F2; --train-win: #15241A;
+  color-scheme: light;
+}
+:root[data-art="fields"][data-theme="night"] {
+  --paper: #10202B; --outer: #0A151C; --card: #172C38;
+  --ink: #EEF2E3; --ink-2: #D2DCCB; --muted: #9FB3A6;
+  --line: #EEF2E3; --shadow: #E8B92A;
+  --accent-2-strong: #4FA3E8; --accent-2: #8FD0EE; --accent-3: #8BD46A; --accent-4: #F2A7C3;
+  --accent-ink: #F2C12E; --accent-2-ink: #8FD0EE;
+  --furrow-a: #1F4A3A; --furrow-b: #183C2F;
+  --fb-back: #1A3644; --fb-mid: #1F4636; --fb-front: #0A1A14; --fb-trunk: #050D0A; --fb-wall: #D9DCCB; --fb-roof: #8E3A2A; --fb-win: #FFC66B; --train-win: #FFE6B0;
+  color-scheme: dark;
+}
+
+/* Scene palettes: every surface changes with the time of day. Three of them: golden hour (also the default without JavaScript), day and night */
+:root, :root[data-scene="golden"] {
+  --palm-trunk: #2A1C25; --palm-ring: #170E15; --palm-leaf: #16202B; --palm-hi: #24364A; --palm-nut: #2A1C25;
+  --sky1: #FF6B8B; --sky2: #FF9A5A; --sky3: #FFD9A0; --sea: #0E6FA8; --sea-line: #FFF4E2;
+  --sun1: #FFE08A; --sun2: #FF7F5C; --sun-op: 1; --moon-op: 0;
+  --cloud: #FFE6D6; --cloud-shade: #F59A86; --cloud-op: 0.9; --plane-op: 0;
+  --deck: #EBD9B9; --slab: #FFF8EA; --slab-2: #DCC39C; --glass: #8EDCF3; --mullion: #4FB3D9; --glow-op: 0;
+  --pool1: #38C2EE; --pool2: #0086C9; --coping: #FFF8EA; --ripple: #E9FBFF; --lights-op: 0.3;
+  --palm: #14161C; --reflect: #043B66;
+  /* Scenery strips */
+  --wave: #7FC9EE; --birds: #3A1E3E; --birds-op: 1; --shadow-op: 0.34; --hut-roof: #D2416A; --flower-op: 0.9; --boat: #2A1A3A;
+  --city-hill: #A8517E; --tower-a: #5E3A78; --tower-b: #6E4282; --tower-c: #4E3270;
+  --win-a: #FFD08A; --win-b: #FFE9C8; --win-op: 0.75; --city-water1: #E0688A; --city-water2: #4A2058; --city-shine: #FFD9A8;
+}
+:root[data-scene="day"] {
+  --palm-trunk: #7A5236; --palm-ring: #4E3322; --palm-leaf: #1B6644; --palm-hi: #4BB37A; --palm-nut: #5A3A1E;
+  --sky1: #4DB8EE; --sky2: #93D8F5; --sky3: #E6F6F8; --sea: #0E7FC0; --sea-line: #FFFFFF;
+  --sun1: #FFF6D6; --sun2: #FFD36B; --sun-op: 0; --moon-op: 0;
+  --cloud: #FFFFFF; --cloud-shade: #BFE3F6; --cloud-op: 1; --plane-op: 1;
+  --deck: #F0E1C5; --slab: #FFFDF6; --slab-2: #E1CCA6; --glass: #9BE3F7; --mullion: #4FB3D9; --glow-op: 0;
+  --pool1: #3FD0F5; --pool2: #0094D8; --coping: #FFFDF6; --ripple: #EFFDFF; --lights-op: 0;
+  --palm: #14161C; --reflect: #043B66;
+  --wave: #3FD0F5; --birds: #0B2C66; --birds-op: 1; --shadow-op: 0.24; --hut-roof: #E3405A; --flower-op: 1; --boat: #FFFFFF;
+  --city-hill: #9CC6E4; --tower-a: #FFFFFF; --tower-b: #F6D0DA; --tower-c: #CDE9F6;
+  --win-a: #6FC3EA; --win-b: #BFE6F7; --win-op: 0.85; --city-water1: #3AA6DE; --city-water2: #0F64A8; --city-shine: #FFFFFF;
+}
+:root[data-scene="night"] {
+  --palm-trunk: #08081C; --palm-ring: #04040F; --palm-leaf: #0A0A24; --palm-hi: #15143C; --palm-nut: #08081C;
+  --sky1: #0B0C2E; --sky2: #241F66; --sky3: #6A3C8E; --sea: #0B1A44; --sea-line: #C9D8FF;
+  --sun1: #FFE08A; --sun2: #FF7F5C; --sun-op: 0; --moon-op: 1;
+  --cloud: #3A3577; --cloud-shade: #241F5C; --cloud-op: 0; --plane-op: 0;
+  --deck: #34305E; --slab: #8A84BC; --slab-2: #5A548F; --glass: #FFC66B; --mullion: #6E522E; --glow-op: 0.42;
+  --pool1: #44EAFF; --pool2: #0A58A6; --coping: #ACA4D6; --ripple: #E6FDFF; --lights-op: 1;
+  --palm: #07071A; --reflect: #021338;
+  --wave: #3A5FB0; --birds: #000000; --birds-op: 0; --shadow-op: 0.06; --hut-roof: #5A2E6A; --flower-op: 0.35; --boat: #0B0618;
+  --city-hill: #2A1450; --tower-a: #12092A; --tower-b: #170C33; --tower-c: #0E0722;
+  --win-a: #FFE9A8; --win-b: #FFF6D8; --win-op: 1; --city-water1: #6A2A7E; --city-water2: #1A0A3A; --city-shine: #FFE3A8;
+}
+/* Fields scene palettes. Same sky names as the coast (the flooded terraces mirror the sky), plus hills, terraces and the farmhouse */
+:root[data-art="fields"][data-scene="golden"] {
+  --seedling: #B9CB5C; --earth: #9C6E48; --farmer-shirt: #FFE3C2; --farmer-pants: #3A2E3E; --farmer-skin: #A8654A; --farmer-hat: #F2C57C;
+  --sky1: #5B6CC9; --sky2: #F59E72; --sky3: #FFE3A3;
+  --sun1: #FFF2B8; --sun2: #FFB25C; --sun-op: 1; --moon-op: 0;
+  --cloud: #FFE3CF; --cloud-shade: #E89A8C; --cloud-op: 0.9; --plane-op: 1;
+  --hill-far: #C98FB0; --hill-mid: #6E7F4E; --tree: #2F4A2E; --tree-2: #4C6B3A; --trunk: #4A3626;
+  --wall: #FFE9D2; --roof: #C9493A; --window: #FFD08A;
+  --field-1: #D2C35A; --field-2: #B4BF4E; --field-3: #98B244; --field-tex: #6E8A30;
+  --riser: #6C6A34; --bund: #FFE2A8; --gust-op: 0.45; --leaf: #55702F; --lights-op: 0;
+  --egret: #FFF2E0; --egret-op: 1;
+}
+:root[data-art="fields"][data-scene="day"] {
+  --seedling: #7FD35A; --earth: #A97C50; --farmer-shirt: #F4EBD8; --farmer-pants: #2E3A52; --farmer-skin: #B97A55; --farmer-hat: #E9C46A;
+  --sky1: #1E63C6; --sky2: #3E92E6; --sky3: #A9DCF7;
+  --sun1: #FFF6D6; --sun2: #FFD36B; --sun-op: 0; --moon-op: 0;
+  --cloud: #FFFFFF; --cloud-shade: #BFDDF5; --cloud-op: 1; --plane-op: 1;
+  --hill-far: #7FA7DA; --hill-mid: #3E8A4F; --tree: #1F5E3A; --tree-2: #2F7A49; --trunk: #5A4632;
+  --wall: #FFFDF4; --roof: #D9573B; --window: #9FD9F2;
+  --field-1: #8FD35F; --field-2: #6CC250; --field-3: #5DB548; --field-tex: #3F8F3A;
+  --riser: #3E7A3A; --bund: #E2F6B9; --gust-op: 0.55; --leaf: #2F7A39; --lights-op: 0;
+  --egret: #FFFFFF; --egret-op: 1;
+}
+:root[data-art="fields"][data-scene="night"] {
+  --seedling: #2E5E4C; --earth: #2A2A3A; --farmer-shirt: #6F7A9A; --farmer-pants: #141A2C; --farmer-skin: #3A2E3A; --farmer-hat: #4A4A5E;
+  --sky1: #071028; --sky2: #13285A; --sky3: #2D4B78;
+  --sun1: #FFE08A; --sun2: #FF7F5C; --sun-op: 0; --moon-op: 1;
+  --cloud: #2A3F6E; --cloud-shade: #1C2F55; --cloud-op: 0; --plane-op: 0;
+  --hill-far: #1C2F55; --hill-mid: #12263A; --tree: #0A1622; --tree-2: #10202E; --trunk: #070F16;
+  --wall: #8E9CC0; --roof: #3A2F4A; --window: #FFC66B;
+  --field-1: #1B443C; --field-2: #163A33; --field-3: #12322C; --field-tex: #0B2420;
+  --riser: #0E2621; --bund: #6F8FCB; --gust-op: 0.12; --leaf: #0B241F; --lights-op: 1;
+  --egret: #AFC0E0; --egret-op: 0.55;
+}
+
+/* The About bands at golden hour (day and night come from the theme blocks above) */
+:root[data-scene="golden"] { --city-back: #F4B39A; --city-front: #7A4E92; --city-win: #FFD08A; --city-win-op: 0.8; }
+:root[data-art="fields"][data-scene="golden"] { --fb-back: #EBC9A0; --fb-mid: #C9B85A; --fb-front: #55702F; --fb-trunk: #4A3626; --fb-wall: #FFE9D2; --fb-roof: #C9493A; --fb-win: #FFD08A; }
+
+/* Shape and type also change with the painting: hard and condensed by the sea, rounder and wider in the fields */
+:root { --head-stretch: 62%; --head-scale: 1; --radius: 0px; --radius-btn: 0px; --radius-chip: 0px; }
+:root[data-art="fields"] { --head-stretch: 100%; --head-scale: 0.82; --radius: 16px; --radius-btn: 10px; --radius-chip: 999px; }
+/* In the fields, palms take the colours of the other trees */
+:root[data-art="fields"] { --palm-trunk: var(--trunk); --palm-ring: var(--tree); --palm-leaf: var(--tree); --palm-hi: var(--tree-2); --palm-nut: var(--trunk); }
