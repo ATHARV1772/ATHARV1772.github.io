@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <p>© 2026 Atharv Shinde. Both scenes are painted in code, inspired by Hiroshi Nagai’s City Pop paintings.</p>
-      <p>Designed and built by Atharv Shinde with React and Redux Toolkit.{minutes != null && <> <span>It’s {clockText(minutes)} where you are.</span></>}</p>
+      <p>Designed and built with React and Redux Toolkit.{minutes != null && <> <span>It’s {clockText(minutes)} where you are.</span></>}</p>
     </footer>
   );
 }

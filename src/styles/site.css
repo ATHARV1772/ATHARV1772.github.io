@@ -31,6 +31,11 @@ h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; }
+/* Running text is justified from tablet width up. Phone columns (about 40 characters) are too narrow to justify
+   without opening gaps between words, so there it stays ragged. Headings, labels and tables are never justified. */
+@media (min-width: 761px) {
+  .card .lead, .entry .text, .about-text div p, .case .lede, .case-cols p, .lost p { text-align: justify; text-wrap: pretty; }
+}
 svg { display: block; }
 [hidden] { display: none !important; }
 :focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
@@ -188,7 +193,7 @@ main > .vista { content-visibility: auto; contain-intrinsic-size: auto 260px; }
 .c-4 .strip { background: var(--accent-4); }
 .card-in { display: grid; gap: 14px; padding: 18px 18px 18px; flex: 1; align-content: start; }
 .card h3 { font-weight: 800; font-stretch: var(--head-stretch); font-size: calc(clamp(32px, 3vw, 42px) * var(--head-scale)); line-height: 0.95; text-transform: uppercase; }
-.card .lead { color: var(--ink-2); font-size: 15.5px; max-width: 54ch; }
+.card .lead { color: var(--ink-2); font-size: 15.5px; }
 .viz { border: 2px solid var(--line); background: var(--paper); padding: 14px; border-radius: calc(var(--radius) * 0.6); }
 .viz svg { width: 100%; max-width: 520px; height: auto; margin: 0 auto; }
 .viz text { font: 500 12px var(--mono); fill: var(--ink); }
@@ -210,6 +215,10 @@ main > .vista { content-visibility: auto; contain-intrinsic-size: auto 260px; }
 .chips-viz .ok::before { content: "✓"; color: var(--accent-2-ink); }
 .chips-viz .flag { background: var(--accent); color: var(--on-accent); }
 .chips-viz .flag::before { content: "!"; left: 14px; }
+/* The text the three sentences are checked against: a dashed "document" above the answer */
+.chips-viz .source { font: 400 14.5px/1.5 var(--display); padding: 10px 12px; margin-bottom: 6px; background: var(--paper); border-style: dashed; color: var(--ink-2); }
+.chips-viz .source::before { content: none; }
+.chips-viz .source b { display: block; font: 700 11px/1 var(--mono); text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .pipe { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .pipe li { border-radius: var(--radius-btn); border: 2px solid var(--line); background: var(--card); padding: 9px 8px; font: 500 12px/1.35 var(--mono); position: relative; }
 .pipe li.key { background: var(--accent-2); color: var(--on-accent); }
@@ -241,7 +250,15 @@ button.chip:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--sha
 .entry .what::before { border-radius: var(--radius-dot); content: ""; position: absolute; left: -7px; top: 8px; width: 16px; height: 16px; background: var(--accent); border: 3px solid var(--line); }
 .entry h3 { font-weight: 800; font-stretch: var(--head-stretch); font-size: 30px; line-height: 1; text-transform: uppercase; }
 .entry .org { font: 500 12.5px/1.5 var(--mono); text-transform: uppercase; color: var(--muted); margin-top: 6px; }
-.entry p:last-child { margin-top: 10px; max-width: 66ch; color: var(--ink-2); }
+.entry .text { margin-top: 10px; max-width: 70ch; color: var(--ink-2); }
+/* What each job used: beside the text on a wide screen, under it otherwise */
+.entry .used { margin-top: 14px; }
+.entry .used p { font: 700 11px/1 var(--mono); text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+@media (min-width: 1181px) {
+  .entry .what { display: grid; grid-template-columns: minmax(0, 70ch) minmax(0, 1fr); column-gap: 48px; align-items: start; }
+  .entry .what > :not(.used) { grid-column: 1; }
+  .entry .used { grid-column: 2; grid-row: 1 / span 3; margin-top: 4px; }
+}
 
 /* Academics scoreboard */
 /* Tables sit in a frame that can be rounded; a table whose borders collapse ignores border-radius */
@@ -257,11 +274,14 @@ button.chip:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--sha
 
 /* About: a metro line from Kolhapur to Hyderabad, over a city skyline */
 .section.about { padding-bottom: 0; }
-.about-text { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 16px 48px; align-items: start; }
+/* The heading's column is only as wide as the heading, so the text starts close to it; the text runs to about
+   85 characters a line. Below 1181px there isn't room for both side by side, so the heading sits on top. */
+.about-text { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px 64px; align-items: start; }
+@media (max-width: 1180px) { .about-text { grid-template-columns: minmax(0, 1fr); gap: 22px; } }
 .about-text .big { font-weight: 800; font-stretch: var(--head-stretch); font-size: calc(clamp(34px, 3.6vw, 52px) * var(--head-scale)); line-height: 0.95; text-transform: uppercase; color: var(--ink); max-width: 14ch; }
-.about-text div p { font-size: 18px; line-height: 1.65; color: var(--ink-2); max-width: 58ch; }
+.about-text div p { font-size: 18px; line-height: 1.6; color: var(--ink-2); max-width: 70ch; }
 .about-text div p + p { margin-top: 14px; }
-.metro { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 56px; padding-top: 70px; }
+.metro { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 36px; padding-top: 70px; }
 .metro::before { border-radius: var(--radius-chip); content: ""; position: absolute; left: 19px; right: -28px; top: 26px; height: 16px; background: var(--accent); border: 3px solid var(--line); border-right: 0; }
 .stop { position: relative; min-width: 0; }
 .stop::before { content: ""; position: absolute; left: 0; top: -55px; width: 38px; height: 38px; border-radius: 50%; background: var(--card); border: 4px solid var(--line); }
@@ -418,7 +438,6 @@ button.chip:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--sha
   .board td { display: block; border-bottom: 0; padding-top: 0; padding-bottom: 4px; }
   .board td.num { text-align: left; padding-bottom: 16px; border-bottom: 2px solid var(--line); }
   .board tr:last-child td.num { border-bottom: 0; }
-  .about-text { grid-template-columns: 1fr; }
   .metro { grid-template-columns: 1fr; gap: 28px; margin-top: 40px; padding-top: 0; padding-left: 58px; }
   .metro::before { left: 13px; right: auto; top: 19px; bottom: -40px; width: 16px; height: auto; border-right: 3px solid var(--line); border-bottom: 0; }
   .stop::before { left: -56px; top: 2px; }

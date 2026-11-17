@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useScrollPan } from '../hooks/useScrollPan';
 import { useInView } from '../hooks/useInView';
+import { useTravellers } from '../hooks/useTravellers';
 
 /**
  * A strip of painting wider than the page. As it scrolls through the viewport it pans sideways,
@@ -11,6 +12,7 @@ export default function Vista({ coast, fields, className = '', label }) {
   const frame = useRef(null), track = useRef(null);
   useScrollPan(frame, track);
   const onScreen = useInView(frame);
+  useTravellers(frame, onScreen);
   return (
     <div className={`vista ${className}${onScreen === false ? ' is-still' : ''}`} ref={frame} role={label ? 'img' : undefined} aria-label={label} aria-hidden={label ? undefined : true}>
       <div className="vista-track" ref={track}>

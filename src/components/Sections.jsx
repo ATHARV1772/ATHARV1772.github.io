@@ -86,7 +86,10 @@ export function Experience() {
         {experience.map((e) => (
           <article className={`entry${focus.proofs.includes(e.id) ? ' is-lit' : ''}`} key={e.title}>
             <p className="when">{e.when}</p>
-            <div className="what"><h3>{e.title}</h3><p className="org">{e.org}</p><p>{e.text}</p></div>
+            <div className="what">
+              <h3>{e.title}</h3><p className="org">{e.org}</p><p className="text">{e.text}</p>
+              {e.used?.length > 0 && <div className="used"><p>Used</p><ul className="tags">{e.used.map((u) => <li key={u}>{u}</li>)}</ul></div>}
+            </div>
           </article>
         ))}
       </div>

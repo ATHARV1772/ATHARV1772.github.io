@@ -2,6 +2,7 @@ export const experience = [
   {
     id: 'ta',
     proof: ['c', 'cpp', 'dsa', 'coa'],
+    used: ['C', 'C++', 'Data structures and algorithms', 'Computer architecture'],
     when: 'Jul 2025 – now',
     title: 'Teaching Assistant',
     org: 'IIT Hyderabad',
@@ -10,6 +11,7 @@ export const experience = [
   {
     id: 'mastercard',
     proof: [],
+    used: ['Java', 'Selenium', 'REST APIs', 'QA automation'],
     when: 'May – Jul 2023',
     title: 'SDE Intern',
     org: 'Mastercard, Pune',

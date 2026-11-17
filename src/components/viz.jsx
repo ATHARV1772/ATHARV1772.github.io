@@ -8,6 +8,7 @@ import { selectActionLog } from '../store/actionLogSlice';
 export const FaithChips = memo(function FaithChips() {
   return (
     <div className="viz chips-viz">
+      <p className="source"><b>Source</b>The Eiffel Tower was completed in 1889. It is about 330 metres tall.</p>
       <p className="ok">The tower was finished in 1889.</p>
       <p className="ok">It stands about 330 metres high.</p>
       <p className="flag">It was designed by Eiffel’s company.</p>

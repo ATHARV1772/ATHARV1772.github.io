@@ -10,7 +10,7 @@ Needs Node 20 or newer.
 
 ```bash
 npm install
-npm test             # unit tests: store, time of day, first paint, contrast, content, routes, paintings
+npm test             # unit tests: store, time of day, first paint, contrast, content, routes, paintings, travellers
 npm run build        # writes the finished site to dist/
 npm run test:dist    # checks the built pages: links, titles, share images, ids, private data
 npm run preview      # serves dist/ at http://localhost:8000 (needs Python 3)
@@ -25,7 +25,8 @@ src/
   content/       every word on the page, as plain data (projects, skills, history, links, page titles)
   components/    React components; scenes/ holds the two paintings and the shared palm sprites
   store/         Redux Toolkit slices: ui, highlight, caseStudy, actionLog
-  hooks/         case-study navigation with real URLs, scroll panning, the scroll-drawn timeline, in-view detection
+  hooks/         case-study navigation with real URLs, scroll panning, the scroll-drawn timeline, in-view detection,
+                 keeping the strips' travellers (boat, rower, metro) in sight
   lib/           palm geometry, paddy rows, the visitor's local time, routes, <head> tags
   styles/        tokens.css (every colour, per painting and time of day), site.css (base and sections),
                  cards.css, vistas.css, motion.css, highlight.css, pages.css
