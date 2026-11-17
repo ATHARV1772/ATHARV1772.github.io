@@ -1,0 +1,51 @@
+# Tests, builds and checks the site with Node, then publishes dist/ to GitHub Pages, on every push to the default branch.
+# One-time setup: repository Settings > Pages > Build and deployment > Source: "GitHub Actions".
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main, master]   # older repos use master
+  workflow_dispatch:           # also runnable by hand from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; a newer push waits instead of cancelling a deploy halfway
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      # Uses package-lock.json when it is committed, so every build gets the same versions
+      - name: Install dependencies
+        run: if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
+      # A failing check stops the deploy, so a broken build never replaces the live site
+      - name: Unit tests
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Check the built site
+        run: npm run test:dist
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
