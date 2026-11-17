@@ -3,6 +3,9 @@ import { prefersReducedMotion } from '../lib/theme';
 import { StoreViz } from './viz';
 import { ArtSwitch, ModeSwitch } from './Switches';
 
+/** Draws ₹ in the system font: the web fonts keep it in a second file that would cost every visitor ~100 KB. */
+const rupees = (text) => text.split('₹').flatMap((part, i) => (i ? [<span key={i} className="rupee">₹</span>, part] : [part]));
+
 const unsafeSteps = ['A reads ₹500', 'B reads ₹500', 'A checks 500 ≥ 400', 'B checks 500 ≥ 400', 'A writes ₹100', 'B writes ₹100'];
 const safeSteps = ['A locks the row, reads ₹500', 'B waits for the lock', 'A checks 500 ≥ 400', 'B is still waiting', 'A writes ₹100, unlocks', 'B reads ₹100: refused'];
 
@@ -12,10 +15,10 @@ export function RaceDemo() {
     <div className="demo">
       <div className="panel-head">Try it <small>the race every payments app has to survive</small></div>
       <div className="demo-body">
-        <p className="demo-sub">Two ₹400 transfers reach a ₹500 balance at the same moment. Without a lock, both pass the balance check.</p>
+        <p className="demo-sub">{rupees('Two ₹400 transfers reach a ₹500 balance at the same moment. Without a lock, both pass the balance check.')}</p>
         <button className="switch" type="button" aria-pressed={locked} onClick={() => setLocked((l) => !l)}><span className="track" aria-hidden="true"><i /></span>Row lock</button>
-        <div className="steps">{(locked ? safeSteps : unsafeSteps).map((s) => <span key={s}>{s}</span>)}</div>
-        <p className={`out${locked ? ' ok' : ''}`} aria-live="polite">{locked ? 'Second transfer refused. Balance stays correct.' : '₹800 left a ₹500 account. Double spend.'}</p>
+        <div className="steps">{(locked ? safeSteps : unsafeSteps).map((s) => <span key={s}>{rupees(s)}</span>)}</div>
+        <p className={`out${locked ? ' ok' : ''}`} aria-live="polite">{locked ? 'Second transfer refused. Balance stays correct.' : rupees('₹800 left a ₹500 account. Double spend.')}</p>
       </div>
     </div>
   );

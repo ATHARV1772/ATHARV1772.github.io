@@ -23,6 +23,10 @@ export function wipeFrom(from, change) {
   root.setProperty('--tx', `${r.left + r.width / 2}px`);
   root.setProperty('--ty', `${r.top + r.height / 2}px`);
   root.setProperty('--tr', `${Math.hypot(Math.max(r.left, innerWidth - r.left), Math.max(r.top, innerHeight - r.top))}px`);
-  if (document.startViewTransition && !prefersReducedMotion()) document.startViewTransition(() => flushSync(change));
-  else change();
+  if (document.startViewTransition && !prefersReducedMotion()) {
+    const transition = document.startViewTransition(() => flushSync(change));
+    // A second click mid-wipe, or a hidden tab, skips the animation. The change itself still applies,
+    // so the rejected `ready` promise is expected; handling it keeps the console clean.
+    transition.ready.catch(() => {});
+  } else change();
 }

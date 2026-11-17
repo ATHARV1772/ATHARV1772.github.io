@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { phaseAt } from '../lib/time';
 
-// Painting, time-of-day mode and the visitor's clock. The server renders with these defaults;
+// Painting, time-of-day mode, the visitor's clock, and whether the paintings animate. The server renders with these defaults;
 // the browser syncs to the real values (set before first paint by the script in index.html)
 // right after hydration, so server and client markup match.
 const initialState = { art: 'coast', mode: 'auto', minutes: null, motion: true };
@@ -19,6 +19,9 @@ const uiSlice = createSlice({
     tick(state, action) {
       state.minutes = action.payload;
     },
+    toggleMotion(state) {
+      state.motion = !state.motion;
+    },
     syncFromDocument(state, action) {
       const { art, mode, minutes, motion } = action.payload;
       state.art = art === 'fields' ? 'fields' : 'coast';
@@ -29,7 +32,7 @@ const uiSlice = createSlice({
   },
 });
 
-export const { setArt, setMode, tick, syncFromDocument } = uiSlice.actions;
+export const { setArt, setMode, tick, toggleMotion, syncFromDocument } = uiSlice.actions;
 export default uiSlice.reducer;
 
 // Selectors: the scene and the light/dark theme are derived, never stored

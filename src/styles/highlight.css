@@ -7,3 +7,12 @@
 .board tr.is-lit th, .board tr.is-lit td { background: var(--accent-2); color: var(--on-accent); }
 .entry h3 { transition: background-color var(--snap), color var(--snap), box-shadow var(--snap); }
 .entry.is-lit h3 { display: inline; background: var(--accent-2); color: var(--on-accent); box-shadow: 0 0 0 4px var(--accent-2); }
+
+/* "Pick one to see where I used it": the answer appears under the picked chip, because the lit
+   project cards are usually off screen. Clicking pins it; hover only lights things, so nothing below shifts. */
+.chips .skill-result { flex-basis: 100%; margin-top: 8px; font: 500 13px/1.6 var(--mono); color: var(--ink-2); }
+.chips .skill-result:empty { margin: 0; }
+.skill-result b { color: var(--ink); font-weight: 700; }
+.skill-result a { color: var(--ink); text-decoration-line: underline; text-decoration-thickness: 2px; text-decoration-color: var(--accent-ink); text-underline-offset: 3px; }
+.skill-result a:hover { background: var(--accent-2); color: var(--on-accent); }
+.skill-result small { font-size: inherit; color: var(--muted); }

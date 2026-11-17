@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { projects } from '../content/projects';
 import { hoverProject, selectFocus } from '../store/highlightSlice';
@@ -5,7 +6,7 @@ import { useCaseNav } from '../hooks/useCaseNavigation';
 import { vizFor } from './viz';
 import { caseUrl } from '../lib/routes';
 
-function ProjectCard({ project, linked }) {
+const ProjectCard = memo(function ProjectCard({ project, linked }) {
   const dispatch = useDispatch();
   const nav = useCaseNav();
   const Viz = vizFor[project.viz];
@@ -18,8 +19,8 @@ function ProjectCard({ project, linked }) {
     <article
       className={`card ${project.size} ${project.color}${linked ? ' is-linked' : ''}`}
       data-project={project.slug}
-      onMouseEnter={() => dispatch(hoverProject(project.slug))}
-      onMouseLeave={() => dispatch(hoverProject(null))}
+      onPointerEnter={(e) => e.pointerType === 'mouse' && dispatch(hoverProject(project.slug))}
+      onPointerLeave={(e) => e.pointerType === 'mouse' && dispatch(hoverProject(null))}
       onFocus={(e) => e.target.matches(':focus-visible') && dispatch(hoverProject(project.slug))}
       onBlur={() => dispatch(hoverProject(null))}
     >
@@ -36,7 +37,7 @@ function ProjectCard({ project, linked }) {
       </div>
     </article>
   );
-}
+});
 
 export default function Work() {
   const focus = useSelector(selectFocus);

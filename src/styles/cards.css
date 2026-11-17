@@ -52,3 +52,12 @@
 .card:not(.full) .card-in { grid-template-rows: auto auto 1fr; }
 .card:not(.full) .card-in > .viz { display: grid; align-content: center; }
 .card.c-ink .card-in > .store-viz { align-content: start; }
+
+/* Phones: the race diagram and the thesis map would draw their labels at 7-8 px, so they stay off.
+   The card text says the same thing, and the TransactiWar case study has the race as a working demo.
+   The first selector is more specific than the fill rule above, which would otherwise show the diagram again. */
+@media (max-width: 760px) {
+  .card:not(.full) .card-in > .viz.viz-race { display: none; }
+  .fedmap svg { display: none; }
+  .fedmap .redacted { margin-top: 0; }
+}

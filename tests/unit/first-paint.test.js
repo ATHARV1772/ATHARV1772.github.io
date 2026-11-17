@@ -38,7 +38,7 @@ test('in Auto, the first paint and the store agree on the sky for every minute o
 
 test('a saved choice wins over the clock', () => {
   const painted = firstPaint({ hours: 12, saved: { art: 'fields', mode: 'night' } });
-  assert.deepEqual(painted, { art: 'fields', mode: 'night', scene: 'night', theme: 'night', className: 'js' });
+  assert.deepEqual(painted, { art: 'fields', mode: 'night', scene: 'night', theme: 'night', motion: 'on', className: 'js' });
 });
 
 test('golden hour keeps the light page; only night turns it dark', () => {
@@ -56,5 +56,10 @@ test('an unknown saved value falls back to the defaults', () => {
 
 test('with storage blocked (some private windows), the page still paints by the clock', () => {
   const painted = firstPaint({ hours: 22, blocked: true });
-  assert.deepEqual(painted, { art: 'coast', mode: 'auto', scene: 'night', theme: 'night', className: 'js' });
+  assert.deepEqual(painted, { art: 'coast', mode: 'auto', scene: 'night', theme: 'night', motion: 'on', className: 'js' });
+});
+
+test('a paused painting stays paused from the first frame', () => {
+  assert.equal(firstPaint({ saved: { motion: 'off' } }).motion, 'off');
+  assert.equal(firstPaint({ saved: { motion: 'sideways' } }).motion, 'on');
 });

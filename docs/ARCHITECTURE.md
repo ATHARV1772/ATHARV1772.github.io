@@ -27,10 +27,11 @@ The painting, the day/night mode and the time of day all live as attributes on `
 | `data-mode`  | `auto`, `day`, `golden`, `night`       | the time-of-day switch          |
 | `data-scene` | `golden`, `day`, `night`               | the visitor's clock, or the mode |
 | `data-theme` | `day`, `night`                         | derived: only night is dark     |
+| `data-motion`| `on`, `off`                            | the pause button in the hero    |
 
-`src/styles/tokens.css` defines every colour as a CSS custom property, with blocks such as `:root[data-art="fields"][data-theme="night"]` overriding them. Every SVG fill in the paintings reads one of these properties, so one attribute change repaints the whole page, paintings included.
+`src/styles/tokens.css` defines every colour as a CSS custom property, with blocks such as `:root[data-art="fields"][data-theme="night"]` overriding them. Every SVG fill in the paintings reads one of these properties, so one attribute change repaints the whole page, paintings included. Each time of day has its own page palette as well as its own sky: day is light and neutral, golden hour is light and warm (apricot and plum by the sea, wheat and sienna in the fields), night is dark.
 
-A small inline script in `src/index.html` reads the saved choice from `localStorage`, reads the visitor's own clock (golden hour from 5:30 to 7:00 and 16:30 to 19:00, day in between, night after), and sets the four attributes before the first paint. Without it, a visitor who chose Night would see a flash of Day.
+A small inline script in `src/index.html` reads the saved choice from `localStorage`, reads the visitor's own clock (golden hour from 5:30 to 7:00 and 16:30 to 19:00, day in between, night after), and sets the attributes before the first paint. Without it, a visitor who chose Night would see a flash of Day.
 
 **Avoiding hydration mismatches.** The server cannot know the visitor's saved choice or clock, so it renders with defaults (Coast, Auto, no clock). The browser hydrates with the same defaults, so the markup matches. Then an effect in `App.jsx` dispatches `syncFromDocument` with what the inline script already painted, and a 30-second interval keeps the clock moving.
 
@@ -66,8 +67,12 @@ Both paintings are SVG written by hand in `src/components/scenes/`. Both are alw
 - Animations are CSS keyframes on `transform` and `opacity`: waves, the train, the farmer planting, the boats, smoke from the farmhouse.
 - `useInView` (an `IntersectionObserver`) adds `.is-still` to a painting when it leaves the screen, which pauses every animation inside it.
 - `useScrollPan` listens to scroll only while its vista is on screen, batches work into `requestAnimationFrame`, and writes `transform` straight to the DOM, so scrolling never re-renders React.
-- `prefers-reduced-motion: reduce` stops all of it, and the vistas sit still at their middle position.
-- Sizes: the HTML is about 49 KB gzipped (most of it is the two paintings), the JavaScript about 90 KB gzipped (React and Redux), the CSS about 10 KB.
+- `useScrollDraw` does the same for the Experience timeline: the line grows with the scroll down to a reading line just below the middle of the screen, shrinks on the way back up, and fills each entry's marker as it reaches it.
+- `prefers-reduced-motion: reduce` stops all of it: the vistas sit still at their middle position and the timeline is drawn in full.
+- A pause button in the painting's corner freezes every animation for anyone who hasn't set that preference (WCAG 2.2.2: moving content that starts on its own needs a way to stop it). The choice is saved and applied before first paint, like the theme.
+- Theme switches run inside a View Transition. A second click mid-wipe skips the first animation; that rejection is handled, so the console stays clean.
+- Sections below the first screen use `content-visibility: auto`, so the browser skips their style, layout and paint until they come near the viewport. A theme switch then only recalculates what is on screen.
+- Sizes: the HTML is about 50 KB gzipped (most of it is the two paintings), the JavaScript about 90 KB gzipped (React and Redux), the CSS about 10 KB.
 
 ## 7. Case studies: pages of their own, opened as a dialog
 
@@ -109,7 +114,20 @@ Two suites, both on Node's built-in runner (`node:test`), so there is no test fr
 
 CI runs both, around the build; any failure stops the deploy.
 
-## 10. Known limits
+## 10. Choices a reviewer might question
+
+- **Redux Toolkit, not Zustand or Jotai.** The shared state is small, and Zustand would also work. Redux Toolkit is here because named actions, the action log and the persistence middleware make every change traceable, and because Redux is what many production React codebases run on; the site doubles as a sample of it. `createSlice` keeps each slice to a few lines.
+- **A 70-line build script, not Next.js or Astro.** The site needs static HTML pages that hydrate, and nothing else: no server, no data fetching, six pages. `build.mjs` pre-renders every page with `react-dom/server`, the same static output a framework would ship, with esbuild as the only build dependency. If the site grew a blog or a CMS, Astro would be the move.
+- **Global CSS with design tokens, not Tailwind or CSS Modules.** The theme engine works by changing four attributes on `<html>` and letting custom properties cascade into every rule and every SVG fill, across six palettes. That is what global tokens are for; utility classes would repeat each colour per palette. Specificity stays flat, and there are five `!important`s, each an override that must win (hidden, visually hidden, reduced motion, and paused animations off screen or by the pause button).
+- **Native `<dialog>`, not Radix or Headless UI.** `showModal()` already traps focus, closes on Esc, makes the page behind it inert and exposes the dialog role. What the platform doesn't do, returning focus to the card and keeping history in step, is about 60 lines in `useCaseNavigation.jsx`.
+- **Scroll effects outside React.** `useScrollPan` and `useScrollDraw` write a transform or one CSS variable inside `requestAnimationFrame`; no scroll position ever goes into React state. The hero and the vistas re-render only when they enter or leave the screen (to pause their animation), and the paintings inside them are memoised, so nothing is redrawn.
+- **Re-renders kept local.** `App` reads nothing from the store; a `ThemeSync` component that renders nothing does, so a theme switch or a clock tick re-renders only the switches, the clock and the store card. Project cards, skill chips, card diagrams and both paintings are wrapped in `React.memo`, so a hover re-renders only the card or chip whose highlight changed. Hover state does live in Redux on purpose: it is what lets a skill in one section light a project in another, and the store card does not re-render on hover (hover actions change neither the fields it shows nor its log).
+- **Measured, not assumed.** On Chromium with the CPU slowed 4×, using the browser's Event Timing API: a time-of-day click took 150 to 230 ms before these changes and 50 to 135 ms after (the "good" threshold for responsiveness is 200 ms). Sweeping the mouse across every skill chip, and scrolling the whole page, produced no long tasks. Opening a case study, pressing Back and opening another in the same moment, twelve times in a row, never threw an error or left the sheet out of step with the address bar.
+
+## 11. Known limits
+
+- The page has about 2,400 elements, most of them inside the two paintings (every rice seedling and palm frond is drawn). Lighthouse flags pages above 1,400. Drawing the far rows of seedlings as one pattern would cut it.
+
 
 - Fonts load from Google Fonts. Self-hosting them would remove two third-party connections from the first load.
 - About 90 KB of JavaScript is a lot for a page that is mostly text. The React and Redux part is the point of the sample; a content-only site would ship less.

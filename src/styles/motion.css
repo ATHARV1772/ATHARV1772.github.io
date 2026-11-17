@@ -29,3 +29,15 @@
 .ripple-drift { animation: ripple-drift 5s ease-in-out infinite alternate; }
 @keyframes ripple-drift { 0% { transform: translateX(-24px); opacity: 0.45; } 50% { opacity: 0.85; } 100% { transform: translateX(24px); opacity: 0.6; } }
 .is-still * { animation-play-state: paused !important; }
+
+/* The pause button in the hero (components/Hero.jsx) sets data-motion="off" on <html> and freezes everything */
+:root[data-motion="off"] *, :root[data-motion="off"] *::before, :root[data-motion="off"] *::after { animation-play-state: paused !important; }
+.motion-toggle { position: absolute; right: 12px; top: 12px; z-index: 1; display: inline-flex; align-items: center; gap: 7px; padding: 9px 10px; font: 700 11px/1 var(--mono); text-transform: uppercase; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: var(--radius-btn); box-shadow: 3px 3px 0 var(--shadow); cursor: pointer; }
+.motion-toggle svg { width: 14px; height: 14px; flex: none; }
+.motion-toggle:hover { background: var(--accent-2); color: var(--on-accent); }
+html:not(.js) .motion-toggle { display: none; }
+@media (prefers-reduced-motion: reduce) { .motion-toggle { display: none; } }
+@media (max-width: 760px) {
+  .motion-toggle { padding: 9px; }
+  .motion-toggle .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}

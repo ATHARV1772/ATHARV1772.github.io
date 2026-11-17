@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeStore } from '../../src/store';
-import { setArt, setMode, tick, selectScene, selectTheme } from '../../src/store/uiSlice';
+import { setArt, setMode, tick, toggleMotion, selectScene, selectTheme, selectMotion } from '../../src/store/uiSlice';
 import { togglePin, hoverSkill, hoverProject, selectFocus } from '../../src/store/highlightSlice';
 import { openCase, closeCase, selectOpenCase } from '../../src/store/caseSlice';
 import { selectActionLog } from '../../src/store/actionLogSlice';
@@ -120,11 +120,13 @@ test('the painting and the mode are remembered for the next visit', () => {
     const store = makeStore();
     store.dispatch(setArt('fields'));
     store.dispatch(setMode('night'));
-    assert.deepEqual(Object.fromEntries(saved), { art: 'fields', mode: 'night' });
+    assert.deepEqual(Object.fromEntries(saved), { art: 'fields', mode: 'night', motion: 'on' });
+    store.dispatch(toggleMotion());
+    assert.equal(saved.get('motion'), 'off');
     const count = writes;
     store.dispatch(tick(at(12)));
     store.dispatch(hoverSkill('react'));
-    assert.equal(writes, count, 'only the two preference actions write to storage');
+    assert.equal(writes, count, 'only the preference actions write to storage');
   } finally {
     restore();
   }
@@ -139,4 +141,12 @@ test('blocked storage does not break the switches', () => {
   } finally {
     restore();
   }
+});
+
+test('the pause button toggles the animation and shows up in the action log', () => {
+  const store = makeStore();
+  assert.equal(selectMotion(store.getState()), true);
+  store.dispatch(toggleMotion());
+  assert.equal(selectMotion(store.getState()), false);
+  assert.equal(selectActionLog(store.getState())[0].type, 'ui/toggleMotion');
 });

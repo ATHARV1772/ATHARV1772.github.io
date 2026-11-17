@@ -25,7 +25,7 @@ src/
   content/       every word on the page, as plain data (projects, skills, history, links, page titles)
   components/    React components; scenes/ holds the two paintings and the shared palm sprites
   store/         Redux Toolkit slices: ui, highlight, caseStudy, actionLog
-  hooks/         case-study navigation with real URLs, scroll panning, in-view detection
+  hooks/         case-study navigation with real URLs, scroll panning, the scroll-drawn timeline, in-view detection
   lib/           palm geometry, paddy rows, the visitor's local time, routes, <head> tags
   styles/        tokens.css (every colour, per painting and time of day), site.css (base and sections),
                  cards.css, vistas.css, motion.css, highlight.css, pages.css
@@ -49,11 +49,15 @@ To change text, edit the files in `src/content/`; components only decide how thi
 
 **A real address for every case study.** Each project has its own page at `/work/<slug>/`, with its own title, description and share image, so a link to one project previews as that project. In the browser the same address opens the case study as a sheet over the home page, and Back closes it.
 
-**One theme system for everything.** Every colour, including every fill in both paintings, is a CSS custom property. Switching the painting or the time of day changes four attributes on `<html>`, and CSS repaints the page. A small inline script sets those attributes before first paint, so there is no flash of the wrong theme; a test runs that script for every minute of the day to prove it agrees with the store.
+**One theme system for everything.** Every colour, including every fill in both paintings, is a CSS custom property. Each time of day has its own page palette as well as its own sky: Day is light, Golden hour warm, Night dark. Switching the painting or the time of day changes four attributes on `<html>`, and CSS repaints the page. A small inline script sets those attributes before first paint, so there is no flash of the wrong theme; a test runs that script for every minute of the day to prove it agrees with the store.
 
 **Motion that knows when to stop.** Animations are CSS keyframes on `transform` and `opacity`. Each painting pauses while it is off screen (`IntersectionObserver`), the scroll-linked panning writes to the DOM inside `requestAnimationFrame` without re-rendering React, and everything stops for visitors who ask their system for reduced motion.
 
-**Accessible by default.** Real buttons with `aria-pressed`, a modal `<dialog>` for case studies (Esc, Back and Close all work, and focus returns to the card), a skip link, visible focus rings, text alternatives for the paintings, and WCAG AA text contrast in every palette, measured by a test.
+**Cheap interactions.** Store subscriptions sit in the components that show the data, heavy pieces are memoised, and off-screen sections skip rendering with `content-visibility`. Measured with the CPU slowed 4×: a theme switch takes 50 to 135 ms (it took 150 to 230 ms before), and hover and scroll produce no long tasks.
+
+**Accessible by default.** Real buttons with `aria-pressed`, a modal `<dialog>` for case studies (Esc, Back and Close all work, and focus returns to the card), a skip link, visible focus rings, a pause button for the paintings' animation, text alternatives for the paintings, and WCAG AA text contrast in every palette, measured by a test.
+
+**Choices a reviewer might question** (Redux rather than Zustand, a build script rather than Next.js, global tokens rather than Tailwind, the native `<dialog>` rather than Radix) are argued in `docs/ARCHITECTURE.md`, section 10.
 
 **Tests without a test framework.** The tests use Node's built-in runner (`node:test`); esbuild, already the bundler, compiles them. Nothing extra to install.
 

@@ -14,14 +14,14 @@
 <script>
   /* Paint the right painting and time of day before React loads, so there is no flash. Auto follows the visitor's clock (same windows as src/lib/time.js). */
   (function () {
-    var mode = "auto", art = "coast";
-    try { mode = localStorage.getItem("mode") || "auto"; art = localStorage.getItem("art") === "fields" ? "fields" : "coast"; } catch (e) {}
+    var mode = "auto", art = "coast", motion = "on";
+    try { mode = localStorage.getItem("mode") || "auto"; art = localStorage.getItem("art") === "fields" ? "fields" : "coast"; motion = localStorage.getItem("motion") === "off" ? "off" : "on"; } catch (e) {}
     if (["auto", "day", "golden", "night"].indexOf(mode) < 0) mode = "auto";
     var now = new Date(), h = now.getHours() + now.getMinutes() / 60;
     var phase = (h >= 5.5 && h < 7) || (h >= 16.5 && h < 19) ? "golden" : h >= 7 && h < 16.5 ? "day" : "night";
     var scene = mode === "auto" ? phase : mode;
     var d = document.documentElement;
-    d.dataset.art = art; d.dataset.mode = mode; d.dataset.scene = scene;
+    d.dataset.art = art; d.dataset.mode = mode; d.dataset.scene = scene; d.dataset.motion = motion;
     d.dataset.theme = scene === "night" ? "night" : "day";
     d.className = "js";
   })();

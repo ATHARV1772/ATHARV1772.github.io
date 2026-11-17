@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Palm from './Palm';
 import Farmer from './Farmer';
 import { paddyRows } from '../../lib/paddy';
@@ -28,7 +29,7 @@ function Row({ row, i }) {
   );
 }
 
-export default function FieldsScene() {
+function FieldsScene() {
   return (
     <svg className="scene-fields" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="scene-title-f">
       <title id="scene-title-f">Flat painting of paddy fields: a flooded field planted in rows mirrors the sky, a farmer plants seedlings, and green rice ripples in the wind below hills and a farmhouse. Its sky follows the time of day where you are.</title>
@@ -112,3 +113,6 @@ export default function FieldsScene() {
     </svg>
   );
 }
+
+// A static drawing: memo keeps it from re-rendering when its parent does (the hero re-renders as it enters or leaves the screen)
+export default memo(FieldsScene);

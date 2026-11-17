@@ -1,40 +1,31 @@
 // Projects shown as cards in "Selected work" and as case studies in the sheet.
-// Order and size: FaithBench and TransactiWar, the thesis across the full width, then AdaptFedMLP and this site.
+// Order and size: this site (the frontend sample) and TransactiWar, the thesis across the full width, then AdaptFedMLP and FaithBench.
 // Paired cards are sized so they end at about the same height.
 // The thesis and AdaptFedMLP are headed for papers: problem only, no method, no numbers.
 // pageTitle names the project's own page (/work/slug/) in tabs, search results and link previews.
 
 export const projects = [
   {
-    slug: 'faithbench',
-    pageTitle: 'FaithBench: does an LLM’s answer come from its source?',
-    title: 'FaithBench',
+    slug: 'site',
+    pageTitle: 'How this site is built',
+    title: 'This site',
     size: 'wide',
-    color: 'c-3',
-    strip: ['LLM evaluation', 'Jul–Aug 2026'],
-    lead: 'Does an LLM’s answer actually come from its source? I built a checker that says so sentence by sentence, without training a new model.',
-    viz: 'faith-chips',
-    tags: ['NLI', 'Hugging Face'],
-    skills: ['python', 'pytorch', 'hf', 'sklearn', 'nli', 'stats'],
+    color: 'c-ink',
+    strip: ['Frontend', 'Nov 2026'],
+    lead: 'React and Redux Toolkit, pre-rendered so it arrives as plain HTML. Both paintings are hand-written SVG, and the switch, the clock and this card all read one store.',
+    viz: 'store',
+    tags: ['React', 'Redux Toolkit', 'SVG'],
+    skills: ['js', 'react', 'redux', 'html', 'css', 'svg', 'node', 'a11y'],
     case: {
-      meta: 'Independent project, July to August 2026',
-      lede: 'Checking whether an LLM’s answer actually comes from its source, without training a new model.',
-      tags: ['Hugging Face', 'PyTorch', 'NLI', 'Bootstrap CIs'],
-      score: {
-        caption: 'AUROC on RAGTruth, the benchmark the fine-tuned models trained on, and on HaluEval, which no method saw.',
-        head: ['Method', 'RAGTruth', 'HaluEval'],
-        rows: [
-          { mine: true, cells: ['Mine: sentence-level NLI, no training', '0.714', '0.816'] },
-          { cells: ['Mine, plus a learned aggregator', '0.737', '0.810'] },
-          { cells: ['Fine-tuned DeBERTa-base', '0.798', '0.379'] },
-          { cells: ['LettuceDetect-large (published)', '0.840', '0.776'] },
-        ],
-      },
+      meta: 'Personal project, November 2026',
+      lede: 'A portfolio that doubles as the frontend sample: React components, a Redux store, pre-rendering on Node, and two paintings drawn in code.',
+      tags: ['React 19', 'Redux Toolkit', 'esbuild', 'SVG', 'CSS custom properties'],
       sections: [
-        { h: 'What I built', p: ['I split each answer into sentences and ask an NLI model, DeBERTa-v3-large, whether the source backs each one up. The source goes in as overlapping chunks, an idea adapted from SummaC (TACL 2022); feeding it in whole dropped AUROC from 0.77 to 0.63 on a test subset. Then I put it up against word-overlap baselines, a learned aggregator, fine-tuning and a published detector, with bootstrap confidence intervals.'] },
-        { h: 'What happened', p: ['On RAGTruth the fine-tuned models win, as they should on data like their training set. On HaluEval, which none of them saw, my training-free checker wins and the fine-tuned DeBERTa drops below chance. It had learned RAGTruth, not faithfulness.'] },
+        { h: 'How it’s built', p: ['Every section is a React component that renders content kept in plain data files. A Redux Toolkit store holds the state that several parts of the page share: which painting is up, the time of day, which skill or project is highlighted, and which case study is open.', 'At build time Node renders the whole page to HTML with react-dom/server, so the first paint needs no JavaScript; React then hydrates it. esbuild bundles the app, and on every push GitHub Actions runs the tests, builds the pages, checks them and deploys.'] },
+        { h: 'The paintings', p: ['Both scenes are SVG written by hand, and every colour in them is a CSS custom property. Switching the painting or the time of day changes a few attributes on the page root, and the browser repaints everything. The palms are generated from a handful of numbers, the same function drawing every frond.', 'The sea, the rice, the farmer and the train move with CSS animations; the scenery between sections pans with your scroll through requestAnimationFrame. All of it pauses off screen and stops for anyone who has asked their system for reduced motion.'] },
+        { h: 'Checks', p: ['Keyboard access with visible focus, WCAG AA text contrast in every palette (a test measures it on each push), no sideways scrolling from 320 px up, a working page without JavaScript, and a page of its own for every case study.'] },
       ],
-      demo: 'faith',
+      demo: 'store',
     },
   },
   {
@@ -113,26 +104,35 @@ export const projects = [
     },
   },
   {
-    slug: 'site',
-    pageTitle: 'How this site is built',
-    title: 'This site',
+    slug: 'faithbench',
+    pageTitle: 'FaithBench: does an LLM’s answer come from its source?',
+    title: 'FaithBench',
     size: 'wide',
-    color: 'c-ink',
-    strip: ['Frontend', 'Nov 2026'],
-    lead: 'React and Redux Toolkit, pre-rendered so it arrives as plain HTML. Both paintings are hand-written SVG, and the switch, the clock and this card all read one store.',
-    viz: 'store',
-    tags: ['React', 'Redux Toolkit', 'SVG'],
-    skills: ['js', 'react', 'redux', 'html', 'css', 'svg', 'node', 'a11y'],
+    color: 'c-3',
+    strip: ['LLM evaluation', 'Jul–Aug 2026'],
+    lead: 'Does an LLM’s answer actually come from its source? I built a checker that says so sentence by sentence, without training a new model.',
+    viz: 'faith-chips',
+    tags: ['NLI', 'Hugging Face'],
+    skills: ['python', 'pytorch', 'hf', 'sklearn', 'nli', 'stats'],
     case: {
-      meta: 'Personal project, November 2026',
-      lede: 'A portfolio that doubles as the frontend sample: React components, a Redux store, pre-rendering on Node, and two paintings drawn in code.',
-      tags: ['React 19', 'Redux Toolkit', 'esbuild', 'SVG', 'CSS custom properties'],
+      meta: 'Independent project, July to August 2026',
+      lede: 'Checking whether an LLM’s answer actually comes from its source, without training a new model.',
+      tags: ['Hugging Face', 'PyTorch', 'NLI', 'Bootstrap CIs'],
+      score: {
+        caption: 'AUROC on RAGTruth, the benchmark the fine-tuned models trained on, and on HaluEval, which no method saw.',
+        head: ['Method', 'RAGTruth', 'HaluEval'],
+        rows: [
+          { mine: true, cells: ['Mine: sentence-level NLI, no training', '0.714', '0.816'] },
+          { cells: ['Mine, plus a learned aggregator', '0.737', '0.810'] },
+          { cells: ['Fine-tuned DeBERTa-base', '0.798', '0.379'] },
+          { cells: ['LettuceDetect-large (published)', '0.840', '0.776'] },
+        ],
+      },
       sections: [
-        { h: 'How it’s built', p: ['Every section is a React component that renders content kept in plain data files. A Redux Toolkit store holds the state that several parts of the page share: which painting is up, the time of day, which skill or project is highlighted, and which case study is open.', 'At build time Node renders the whole page to HTML with react-dom/server, so the first paint needs no JavaScript; React then hydrates it. esbuild bundles the app, and on every push GitHub Actions runs the tests, builds the pages, checks them and deploys.'] },
-        { h: 'The paintings', p: ['Both scenes are SVG written by hand, and every colour in them is a CSS custom property. Switching the painting or the time of day changes a few attributes on the page root, and the browser repaints everything. The palms are generated from a handful of numbers, the same function drawing every frond.', 'The sea, the rice, the farmer and the train move with CSS animations; the scenery between sections pans with your scroll through requestAnimationFrame. All of it pauses off screen and stops for anyone who has asked their system for reduced motion.'] },
-        { h: 'Checks', p: ['Keyboard access with visible focus, WCAG AA text contrast in every palette (a test measures it on each push), no sideways scrolling from 320 px up, a working page without JavaScript, and a page of its own for every case study.'] },
+        { h: 'What I built', p: ['I split each answer into sentences and ask an NLI model, DeBERTa-v3-large, whether the source backs each one up. The source goes in as overlapping chunks, an idea adapted from SummaC (TACL 2022); feeding it in whole dropped AUROC from 0.77 to 0.63 on a test subset. Then I put it up against word-overlap baselines, a learned aggregator, fine-tuning and a published detector, with bootstrap confidence intervals.'] },
+        { h: 'What happened', p: ['On RAGTruth the fine-tuned models win, as they should on data like their training set. On HaluEval, which none of them saw, my training-free checker wins and the fine-tuned DeBERTa drops below chance. It had learned RAGTruth, not faithfulness.'] },
       ],
-      demo: 'store',
+      demo: 'faith',
     },
   },
 ];

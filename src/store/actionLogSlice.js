@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // The "This site" card shows the last few actions the store handled.
 // Hover and clock actions fire constantly, so they are left out of the log.
-const LOGGED = /^(ui\/setArt|ui\/setMode|highlight\/togglePin|caseStudy\/)/;
+const LOGGED = /^(ui\/setArt|ui\/setMode|ui\/toggleMotion|highlight\/togglePin|caseStudy\/)/;
 
 const actionLogSlice = createSlice({
   name: 'actionLog',

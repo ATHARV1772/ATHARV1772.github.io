@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectArt, selectMode, selectScene, selectTheme } from '../store/uiSlice';
 import { selectActionLog } from '../store/actionLogSlice';
 
 // Small visuals inside the project cards. None of them reveal method or results for the papers in progress.
 
-export function FaithChips() {
+export const FaithChips = memo(function FaithChips() {
   return (
     <div className="viz chips-viz">
       <p className="ok">The tower was finished in 1889.</p>
@@ -13,10 +13,10 @@ export function FaithChips() {
       <p className="flag">It was designed by Eiffel’s company.</p>
     </div>
   );
-}
+});
 
 // The thesis setting: hospitals keep their scans, only model updates travel
-export function FederatedMap() {
+export const FederatedMap = memo(function FederatedMap() {
   const sites = [0, 1, 2];
   return (
     <div className="viz fedmap">
@@ -47,10 +47,10 @@ export function FederatedMap() {
       </div>
     </div>
   );
-}
+});
 
 // AdaptFedMLP's setting: five hospitals, five bleed types, each hospital labels one
-export function LabelMatrix() {
+export const LabelMatrix = memo(function LabelMatrix() {
   const types = ['EDH', 'IPH', 'IVH', 'SAH', 'SDH'];
   return (
     <div className="viz">
@@ -68,15 +68,15 @@ export function LabelMatrix() {
       </table>
     </div>
   );
-}
+});
 
-export function RaceViz() {
+export const RaceViz = memo(function RaceViz() {
   return (
     <div className="viz viz-race">
-      <svg viewBox="0 0 460 120" aria-hidden="true"><text x="0" y="28">A sends ₹400</text><text x="0" y="100">B sends ₹400</text><path className="ln" d="M98 24 C140 24 150 52 186 56" /><path className="ln" d="M98 96 C140 96 150 70 186 66" /><rect className="box" x="188" y="38" width="96" height="46" /><text className="big" x="236" y="68" textAnchor="middle">₹500</text><path className="bad" d="M286 54 C318 50 326 28 352 26" /><path className="good" d="M286 68 C318 72 326 94 352 96" /><text x="360" y="22">no lock:</text><text x="360" y="38">₹800 leaves</text><text x="360" y="94">with a lock:</text><text x="360" y="110">B is refused</text></svg>
+      <svg viewBox="0 0 460 120" aria-hidden="true"><text x="0" y="28">A sends <tspan className="rupee">₹</tspan>400</text><text x="0" y="100">B sends <tspan className="rupee">₹</tspan>400</text><path className="ln" d="M98 24 C140 24 150 52 186 56" /><path className="ln" d="M98 96 C140 96 150 70 186 66" /><rect className="box" x="188" y="38" width="96" height="46" /><text className="big" x="236" y="68" textAnchor="middle"><tspan className="rupee">₹</tspan>500</text><path className="bad" d="M286 54 C318 50 326 28 352 26" /><path className="good" d="M286 68 C318 72 326 94 352 96" /><text x="360" y="22">no lock:</text><text x="360" y="38"><tspan className="rupee">₹</tspan>800 leaves</text><text x="360" y="94">with a lock:</text><text x="360" y="110">B is refused</text></svg>
     </div>
   );
-}
+});
 
 // Live view of the Redux store: the same state the painting switch and the clock write to
 export function StoreViz({ large = false }) {
@@ -91,7 +91,7 @@ export function StoreViz({ large = false }) {
     <div className={`viz store-viz${large ? ' large' : ''}`}>
       <pre aria-label="Current Redux state">{state}</pre>
       <ol className="action-log" aria-label="Last actions dispatched" aria-live="polite">
-        {log.length === 0 ? <li className="empty">No actions yet. Switch the painting or Day/Night.</li> : log.map((e) => <li key={e.id}><b>{e.type}</b>{e.payload && ` ${e.payload}`}</li>)}
+        {log.length === 0 ? <li className="empty">No actions yet. Switch the painting or the time of day.</li> : log.map((e) => <li key={e.id}><b>{e.type}</b>{e.payload && ` ${e.payload}`}</li>)}
       </ol>
     </div>
   );

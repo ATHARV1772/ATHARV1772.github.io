@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { palmGeometry } from '../../lib/palm';
 import { TUFT } from '../../lib/paddy';
 
@@ -26,7 +27,7 @@ function PalmShape({ id, params }) {
   );
 }
 
-export default function Sprites() {
+function Sprites() {
   return (
     <svg className="sprites" width="0" height="0" aria-hidden="true" focusable="false">
       <defs>
@@ -36,3 +37,6 @@ export default function Sprites() {
     </svg>
   );
 }
+
+// Shared shapes, drawn once: memo keeps them from ever re-rendering
+export default memo(Sprites);

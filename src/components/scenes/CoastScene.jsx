@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import Palm from './Palm';
 
 // The pool painting. Every colour is a custom property set per time of day (styles/tokens.css).
 const stars = [[40, 60, 1.4], [90, 140, 1.1], [130, 40, 1.2], [170, 210, 1], [210, 96, 1.5], [250, 30, 1.1], [290, 170, 1.2], [330, 70, 1.3], [370, 240, 1], [400, 130, 1.4], [430, 30, 1], [470, 190, 1.1], [520, 80, 1.5], [560, 250, 1], [590, 30, 1.2], [700, 60, 1.3], [720, 200, 1.1], [760, 30, 1], [790, 140, 1.4], [830, 80, 1.1], [860, 230, 1], [890, 40, 1.3], [920, 150, 1.2], [950, 90, 1], [980, 240, 1.1], [20, 260, 1], [60, 320, 1], [260, 300, 1], [480, 300, 1], [940, 320, 1]];
 
-export default function CoastScene() {
+function CoastScene() {
   return (
     <svg className="scene-coast" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="scene-title">
       <title id="scene-title">Flat painting of a pool, palm trees and a modern two-storey house by the sea. Its sky follows the time of day where you are.</title>
@@ -106,3 +107,6 @@ export default function CoastScene() {
     </svg>
   );
 }
+
+// A static drawing: memo keeps it from re-rendering when its parent does (the hero re-renders as it enters or leaves the screen)
+export default memo(CoastScene);

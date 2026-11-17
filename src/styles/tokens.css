@@ -1,5 +1,5 @@
 /* Design tokens. data-art picks the painting and the whole palette, data-theme picks light or dark,
-   data-scene picks the time of day inside the painting. All three live on <html>. */
+   data-scene picks the time of day: the painting's sky, and at golden hour a warmer page too. All three live on <html>. */
 :root {
   --paper: #F5EFE4; --outer: #E9DFCC; --card: #FBF7EF;
   --ink: #14161C; --ink-2: #34343B; --muted: #5F5A53;
@@ -43,6 +43,23 @@
   --furrow-a: #1F4A3A; --furrow-b: #183C2F;
   --fb-back: #1A3644; --fb-mid: #1F4636; --fb-front: #0A1A14; --fb-trunk: #050D0A; --fb-wall: #D9DCCB; --fb-roof: #8E3A2A; --fb-win: #FFC66B; --train-win: #FFE6B0;
   color-scheme: dark;
+}
+/* Golden hour warms the whole page, not just the painting: apricot and plum by the sea, wheat and sienna
+   in the fields. It stays a light page, so data-theme remains "day". Both blocks set the same properties,
+   so in the fields the second block wins every one of them. */
+:root[data-scene="golden"] {
+  --paper: #FFD5B5; --outer: #F7A982; --card: #FFEAD8;
+  --ink: #2A1232; --ink-2: #4A2A50; --muted: #77485F;
+  --line: #2A1232; --shadow: #6E1A47; --on-accent: #2A1232;
+  --accent: #FF7B6B; --accent-3: #FFB54D; --accent-2-strong: #4D7FE0; --accent-2: #A9C7FF; --accent-4: #E7B0DD;
+  --accent-ink: #B0263F; --accent-2-ink: #3A55A8;
+}
+:root[data-art="fields"][data-scene="golden"] {
+  --paper: #F8D9A0; --outer: #EBB86A; --card: #FDF0D5;
+  --ink: #2B2213; --ink-2: #4A3E28; --muted: #64522E;
+  --line: #2B2213; --shadow: #A3461F; --on-accent: #2B2213;
+  --accent: #F29A2E; --accent-3: #B6D46A; --accent-2-strong: #D9577A; --accent-2: #F4A7B5; --accent-4: #CDB2EA;
+  --accent-ink: #9C3D12; --accent-2-ink: #8E2E4E;
 }
 
 /* Scene palettes: every surface changes with the time of day. Three of them: golden hour (also the default without JavaScript), day and night */
