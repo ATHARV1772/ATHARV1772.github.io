@@ -5,7 +5,7 @@ export const experience = [
     when: 'Jul 2025 – now',
     title: 'Teaching Assistant',
     org: 'IIT Hyderabad',
-    text: 'I run lab sessions for Computer Architecture, Algorithms, and Advanced Data Structures and Algorithms, grade, coordinate exams, and help students get unstuck.',
+    text: 'I run lab sessions for Computer Architecture, Algorithms, and Advanced Data Structures and Algorithms. I also grade assignments, coordinate and grade exams, and help students get unstuck.',
   },
   {
     id: 'mastercard',
@@ -13,7 +13,7 @@ export const experience = [
     when: 'May – Jul 2023',
     title: 'SDE Intern',
     org: 'Mastercard, Pune',
-    text: 'I worked on the Individual Data Access Portal, the web app Mastercard users worldwide use to see their personal data. I wrote Selenium (Java) tests for its interface, chased down failing network requests, added REST API checks to the QA pipeline, and kept the compliance documents in order.',
+    text: 'I worked on the Individual Data Access Portal, a web app deployed worldwide where users view their personal data. I wrote Selenium (Java) tests for its interface, chased down failing network requests, added REST API checks to the QA pipeline, and kept the compliance documents in order.',
   },
 ];
 
@@ -27,10 +27,11 @@ export const academics = [
 ];
 
 export const about = {
-  big: 'Electronics first, then software.',
+  big: 'Find the breaking point. Engineer it out.',
   paragraphs: [
-    'Kolhapur for school, Pune for an electronics degree, Hyderabad for computer science. What ties it together: I like finding where things break, whether that’s a web portal’s tests at Mastercard, a payments app in a security war game, or an evaluation that catches what standard metrics miss.',
-    'Away from the keyboard, I paint. The two scenes on this page, a coast and a paddy field, are paintings done in code, inspired by Hiroshi Nagai’s City Pop work.',
+    'My engineering foundation is in electronics; my execution is in machine learning and distributed systems. My hardware background taught me to build from the lowest layer up—a first-principles philosophy I now apply across the entire computational stack.',
+    'I do not just train models; I engineer the architectures that sustain them. Whether I am developing semi-supervised federated learning pipelines for medical imaging, building evaluation frameworks that expose LLM hallucinations (FaithBench), or securing a peer-to-peer payments app against active attacks (TransactiWar), my goal is to find the structural breaking points and mathematically engineer them out.',
+    'This rigorous, data-driven approach extends directly to the frontend. I am a traditional acrylic painter, but the landscapes on this site are entirely engineered in code. There are no static images; they are constructed from raw SVG mathematics, CSS variables, and frame-synced animation. It is where visual design meets the exact same structural precision I demand from my machine learning models.',
   ],
   stops: [
     { code: 'KLH', city: 'Kolhapur', years: 'Until 2020', did: 'School and junior college' },

@@ -99,14 +99,14 @@ export function Academics() {
   return (
     <section className="section" id="academics" aria-labelledby="acad-title">
       <div className="section-head"><h2 id="acad-title">Academics and ranks</h2><p>exams and degrees</p></div>
-      <table className="board">
+      <div className="board-wrap"><table className="board">
         <caption className="visually-hidden">Exam ranks and grades</caption>
         <tbody>
           {academics.map((a) => (
             <tr key={a.name} className={[a.top && 'top', focus.proofs.includes(a.id) && 'is-lit'].filter(Boolean).join(' ') || undefined}><th scope="row">{a.name}</th><td>{a.detail}</td><td className="num">{a.value}</td></tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
     </section>
   );
 }

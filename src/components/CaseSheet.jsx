@@ -16,11 +16,14 @@ export function CaseStudy({ project, inLibrary = false }) {
       <ul className="tags">{c.tags.map((t) => <li key={t}>{t}</li>)}</ul>
       {c.metrics && <div className="metrics">{c.metrics.map(([b, s]) => <div className="metric" key={s}><b>{b}</b><span>{s}</span></div>)}</div>}
       {c.score && (
-        <table className="score">
-          <caption>{c.score.caption}</caption>
+        <>
+        <div className="score-wrap"><table className="score">
+          <caption className="visually-hidden">{c.score.caption}</caption>
           <thead><tr>{c.score.head.map((h) => <th key={h} scope="col">{h}</th>)}</tr></thead>
           <tbody>{c.score.rows.map((r) => <tr key={r.cells[0]} className={r.mine ? 'mine' : undefined}><th scope="row">{r.cells[0]}</th><td>{r.cells[1]}</td><td>{r.cells[2]}</td></tr>)}</tbody>
-        </table>
+        </table></div>
+        <p className="score-note" aria-hidden="true">{c.score.caption}</p>
+        </>
       )}
       <div className="case-cols">
         {c.sections.map((s) => <div key={s.h}><h3>{s.h}</h3>{s.p.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}</div>)}

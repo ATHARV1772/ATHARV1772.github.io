@@ -51,7 +51,7 @@ export const projects = [
       ],
       sections: [
         { h: 'What we built', p: ['Accounts, transfers and profiles in PHP and MySQL, in Docker behind Apache. The defences: parameterized queries, CSRF tokens, output encoding backed by a Content Security Policy, Argon2id password hashing, one-time nonces so a transfer can’t be replayed, and row locks so two transfers can’t spend the same balance.'] },
-        { h: 'The war game', p: ['For a week in March, other teams attacked our app while we attacked theirs. None of the 16 reports against us got any data out. The closest call was SSL stripping, which worked only because HSTS can’t protect a bare IP address, a limit of the exercise setup. On offence, we took over another team’s admin account: their login had no rate limit, trusted a spoofable X-Forwarded-For header, and still used admin:admin.'] },
+        { h: 'The war game', p: ['For a week in March, other teams attacked our app while we attacked theirs. None of the 16 reports against us got any data out. The closest call was SSL stripping: the downgrade itself succeeded, only because HSTS can’t protect a bare IP address (a limit of the exercise setup), but it got no data out. On offence, we took over another team’s admin account: their login had no rate limit, trusted a spoofable X-Forwarded-For header, and still used admin:admin.'] },
       ],
       demo: 'race',
     },

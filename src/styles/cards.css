@@ -20,11 +20,20 @@
 .fedmap .model { fill: var(--accent-4); stroke: var(--line); stroke-width: 2.5; }
 .fedmap .model-label { font-weight: 700; fill: var(--on-accent); }
 .fedmap .out { stroke: var(--ink); stroke-width: 2.5; }
+/* Boxes drawn in SVG follow the theme's corners too */
+.fedmap .box, .fedmap .model, .viz-race .box, rect.server { rx: var(--svg-rx); }
+.fedmap .xray { rx: calc(var(--svg-rx) * 0.5); }
 
 /* AdaptFedMLP: each hospital labels one bleed type */
+.matrix-wrap { border-radius: var(--radius-btn); overflow: hidden; border: 2px solid var(--line); }
 .label-matrix { width: 100%; border-collapse: collapse; font: 500 12px/1 var(--mono); text-align: center; }
-.label-matrix caption { caption-side: bottom; text-align: left; padding-top: 10px; color: var(--muted); font: 500 12px/1.4 var(--mono); }
+.matrix-note { padding-top: 10px; color: var(--muted); font: 500 12px/1.4 var(--mono); }
 .label-matrix th, .label-matrix td { padding: 7px 4px; border: 2px solid var(--line); }
+/* the frame draws the outer edge, so the grid keeps only its inner lines */
+.label-matrix tr > :first-child { border-left: 0; }
+.label-matrix tr > :last-child { border-right: 0; }
+.label-matrix thead tr > * { border-top: 0; }
+.label-matrix tbody tr:last-child > * { border-bottom: 0; }
 .label-matrix thead th { font-weight: 700; }
 .label-matrix td.known { background: var(--accent-2); color: var(--on-accent); font-weight: 700; }
 .label-matrix td.unknown { color: var(--muted); }

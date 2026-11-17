@@ -10,7 +10,7 @@ Needs Node 20 or newer.
 
 ```bash
 npm install
-npm test             # unit tests: store, time of day, first paint, contrast, content, routes
+npm test             # unit tests: store, time of day, first paint, contrast, content, routes, paintings
 npm run build        # writes the finished site to dist/
 npm run test:dist    # checks the built pages: links, titles, share images, ids, private data
 npm run preview      # serves dist/ at http://localhost:8000 (needs Python 3)
@@ -53,7 +53,7 @@ To change text, edit the files in `src/content/`; components only decide how thi
 
 **Motion that knows when to stop.** Animations are CSS keyframes on `transform` and `opacity`. Each painting pauses while it is off screen (`IntersectionObserver`), the scroll-linked panning writes to the DOM inside `requestAnimationFrame` without re-rendering React, and everything stops for visitors who ask their system for reduced motion.
 
-**Cheap interactions.** Store subscriptions sit in the components that show the data, heavy pieces are memoised, and off-screen sections skip rendering with `content-visibility`. Measured with the CPU slowed 4×: a theme switch takes 50 to 135 ms (it took 150 to 230 ms before), and hover and scroll produce no long tasks.
+**Cheap interactions.** Store subscriptions sit in the components that show the data, heavy pieces are memoised, and off-screen scenery skips rendering with `content-visibility`. Measured with the CPU slowed 4×: a theme switch takes 80 to 140 ms (it took 150 to 230 ms before), and hover and scroll produce no long tasks.
 
 **Accessible by default.** Real buttons with `aria-pressed`, a modal `<dialog>` for case studies (Esc, Back and Close all work, and focus returns to the card), a skip link, visible focus rings, a pause button for the paintings' animation, text alternatives for the paintings, and WCAG AA text contrast in every palette, measured by a test.
 
@@ -68,6 +68,7 @@ On every push, in CI:
 - Store: reducers, derived selectors, memoisation, the action log, saved preferences (and blocked storage)
 - First paint: the inline theme script agrees with the store for all 1,440 minutes of the day
 - Contrast: every text colour pair meets WCAG AA in both paintings at every time of day
+- Paintings: the same seed draws the same palm on the server and in the browser, so hydration matches
 - Content: every skill is backed by a project or a proof; papers in preparation show no results; no private contact details
 - Built pages: unique titles and canonical URLs, existing share images, one `h1`, no repeated ids, no broken local links, sitemap complete
 

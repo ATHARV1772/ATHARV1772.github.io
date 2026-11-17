@@ -54,8 +54,8 @@ export const LabelMatrix = memo(function LabelMatrix() {
   const types = ['EDH', 'IPH', 'IVH', 'SAH', 'SDH'];
   return (
     <div className="viz">
-      <table className="label-matrix">
-        <caption>Each hospital labels one bleed type; the other four are unknown.</caption>
+      <div className="matrix-wrap"><table className="label-matrix">
+        <caption className="visually-hidden">Each hospital labels one bleed type; the other four are unknown.</caption>
         <thead><tr><th scope="col"><span className="visually-hidden">Hospital</span></th>{types.map((t) => <th key={t} scope="col">{t}</th>)}</tr></thead>
         <tbody>
           {types.map((_, row) => (
@@ -65,7 +65,8 @@ export const LabelMatrix = memo(function LabelMatrix() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></div>
+      <p className="matrix-note" aria-hidden="true">Each hospital labels one bleed type; the other four are unknown.</p>
     </div>
   );
 });

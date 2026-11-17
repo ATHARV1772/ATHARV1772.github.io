@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeStore } from '../../src/store';
 import { setArt, setMode, tick, toggleMotion, selectScene, selectTheme, selectMotion } from '../../src/store/uiSlice';
-import { togglePin, hoverSkill, hoverProject, selectFocus } from '../../src/store/highlightSlice';
+import { togglePin, hoverSkill, hoverProject, selectFocus, selectPinned } from '../../src/store/highlightSlice';
 import { openCase, closeCase, selectOpenCase } from '../../src/store/caseSlice';
 import { selectActionLog } from '../../src/store/actionLogSlice';
 
@@ -71,6 +71,18 @@ test('a hovered skill wins over the pinned one, and a second click unpins', () =
   assert.deepEqual(skills(), ['python']);
   store.dispatch(togglePin('python'));
   assert.equal(selectFocus(store.getState()).kind, null);
+});
+
+test('a second click clears a pinned skill at once, with the mouse still on the chip', () => {
+  const store = makeStore();
+  store.dispatch(hoverSkill('react')); // the mouse is on the chip
+  store.dispatch(togglePin('react')); // first click pins
+  assert.equal(selectPinned(store.getState()), 'react');
+  store.dispatch(togglePin('react')); // second click, mouse not moved
+  assert.equal(selectPinned(store.getState()), null);
+  assert.equal(selectFocus(store.getState()).kind, null);
+  store.dispatch(hoverSkill('react')); // the mouse leaves the chip and comes back
+  assert.deepEqual(selectFocus(store.getState()).skills, ['react']);
 });
 
 test('hovering a project lights its skills', () => {

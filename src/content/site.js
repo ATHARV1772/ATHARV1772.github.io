@@ -3,7 +3,7 @@
 export const person = {
   name: 'Atharv Shinde',
   role: 'Software engineer / M.Tech CSE, IIT Hyderabad',
-  headline: 'Software that holds up when someone tries to break it.',
+  headline: 'Building resilient systems from the bare metal up.',
   email: 'atharv1772@gmail.com',
   linkedin: 'https://www.linkedin.com/in/atharv-shinde-b96305217/',
   github: 'https://github.com/ATHARV1772',

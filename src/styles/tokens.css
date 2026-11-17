@@ -140,7 +140,7 @@
 :root[data-art="fields"][data-scene="golden"] { --fb-back: #EBC9A0; --fb-mid: #C9B85A; --fb-front: #55702F; --fb-trunk: #4A3626; --fb-wall: #FFE9D2; --fb-roof: #C9493A; --fb-win: #FFD08A; }
 
 /* Shape and type also change with the painting: hard and condensed by the sea, rounder and wider in the fields */
-:root { --head-stretch: 62%; --head-scale: 1; --radius: 0px; --radius-btn: 0px; --radius-chip: 0px; }
-:root[data-art="fields"] { --head-stretch: 100%; --head-scale: 0.82; --radius: 16px; --radius-btn: 10px; --radius-chip: 999px; }
+:root { --head-stretch: 62%; --head-scale: 1; --radius: 0px; --radius-btn: 0px; --radius-chip: 0px; --radius-dot: 0px; --svg-rx: 0px; }
+:root[data-art="fields"] { --head-stretch: 100%; --head-scale: 0.82; --radius: 16px; --radius-btn: 10px; --radius-chip: 999px; --radius-dot: 50%; --svg-rx: 8px; }
 /* In the fields, palms take the colours of the other trees */
 :root[data-art="fields"] { --palm-trunk: var(--trunk); --palm-ring: var(--tree); --palm-leaf: var(--tree); --palm-hi: var(--tree-2); --palm-nut: var(--trunk); }

@@ -8,7 +8,7 @@ export function applyTheme({ art, mode, scene, theme }) {
   d.dataset.scene = scene;
   d.dataset.theme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.content = getComputedStyle(document.body).backgroundColor;
+  if (meta) meta.content = getComputedStyle(document.documentElement).backgroundColor;
 }
 
 export const prefersReducedMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

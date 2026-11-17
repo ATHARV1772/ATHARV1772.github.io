@@ -8,7 +8,14 @@ const highlightSlice = createSlice({
   initialState: { pinned: null, hoverSkill: null, hoverProject: null },
   reducers: {
     togglePin(state, action) {
-      state.pinned = state.pinned === action.payload ? null : action.payload;
+      if (state.pinned === action.payload) {
+        // A second click unpins. The mouse is usually still on the chip, and a hovered chip looks the same as a
+        // pinned one, so the hover highlight goes too; otherwise nothing would change until the mouse moved away.
+        state.pinned = null;
+        state.hoverSkill = null;
+      } else {
+        state.pinned = action.payload;
+      }
     },
     hoverSkill(state, action) {
       state.hoverSkill = action.payload;
