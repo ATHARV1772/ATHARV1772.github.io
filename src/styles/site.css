@@ -5,7 +5,28 @@ body { margin: 0; padding: 22px; background: transparent; font: 400 16.5px/1.6 v
 /* Behind the page, a still sky: tinted at the top with the painting's sky and at the bottom with its horizon,
    for the current painting and time of day. Fixed, so it stays put while the page scrolls over it; a layer of its
    own, so scrolling never repaints it. Without color-mix() the flat --outer on <html> shows instead. */
-body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, color-mix(in srgb, var(--sky1) 42%, var(--outer)) 0%, var(--outer) 55%, color-mix(in srgb, var(--sky2) 34%, var(--outer)) 100%); }
+:root { --page-sky: linear-gradient(180deg, color-mix(in srgb, var(--sky1) 42%, var(--outer)) 0%, var(--outer) 55%, color-mix(in srgb, var(--sky2) 34%, var(--outer)) 100%); }
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: var(--page-sky); }
+/* Scrollbars, wherever there is a mouse or trackpad (phones keep their own auto-hiding indicator). The thumb is
+   drawn like a skill chip, square on the coast and rounded in the fields, and lights up like one under the
+   pointer; the page's rail carries on the sky behind it. Chrome, Edge and Safari take all of this; Firefox, which
+   has only scrollbar-color, takes the colours. */
+@media (hover: hover) and (pointer: fine) {
+  @supports selector(::-webkit-scrollbar) {
+    ::-webkit-scrollbar { width: 16px; height: 16px; }
+    ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: var(--paper); }
+    html::-webkit-scrollbar-track, body::-webkit-scrollbar-track { background: var(--page-sky); } /* the page's own bar takes body's style in Chrome */
+    ::-webkit-scrollbar-thumb { background: var(--card); border: 3px solid var(--line); border-radius: var(--radius-chip); }
+    ::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active { background: var(--accent); }
+    .store-viz pre::-webkit-scrollbar { height: 10px; }
+    .store-viz pre::-webkit-scrollbar-track { background: var(--ink); }
+    .store-viz pre::-webkit-scrollbar-thumb { background: var(--paper); border: 2px solid var(--ink); }
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    html { scrollbar-color: var(--line) var(--outer); }
+    .sheet-body { scrollbar-color: var(--line) var(--paper); }
+  }
+}
 h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
 a { color: inherit; text-decoration: none; }
