@@ -79,4 +79,5 @@ By hand with Playwright during development (needs a browser, so not in CI):
 - No console errors and no hydration mismatches, on the home page and on every case-study page
 - Keyboard: every control reachable; case studies open, close and step with the keyboard
 - Back and Forward open and close case studies; shared `/work/<slug>/` and older `?project=` links open the right one
+- The case-study track: each segment opens its study without adding a history entry, the open one is marked as the current step, Prev and Next wrap around, and the bars stay easy to tap on a 320 px phone
 - Reduced motion: no animation runs

@@ -82,7 +82,8 @@ Each case study has its own address, `/work/<slug>/` (`src/lib/routes.js`). The 
 In the browser, `src/hooks/useCaseNavigation.jsx` turns those addresses into an app-like flow:
 
 - **Open from a card:** dispatch `openCase`, then `history.pushState` the project's address, so the case study can be shared and Back closes it.
-- **Prev and Next:** `history.replaceState`, so stepping through five case studies doesn't leave five history entries.
+- **Prev and Next:** `history.replaceState`, so stepping through five case studies doesn't leave five history entries. They wrap around: Next on the last study opens the first.
+- **The track:** a row of segments under the sheet's bar, one per case study, shows where the visitor is. Studies before the open one are filled, the open one is raised in the accent, the rest are empty. Each segment is a button that jumps to its study through the same `goTo` as Prev and Next, so it replaces the history entry too. It is a `<nav>` with an ordered list, and the open study's button carries `aria-current="step"`. Phones show thin bars without names, inside 24 px tall buttons so they stay easy to tap. They also drop the title from the bar's "Case study 3 of 5" label, since the heading below repeats it. For that reason the dialog gets its full name ("Case study 3 of 5: <title>") from `aria-label`, not from the visible label.
 - **Close (button, Esc or a click outside):** `history.back()` if the sheet pushed an entry; otherwise (the visitor arrived on the case study's own page) replace the address with `/`. A `popstate` listener keeps the store in step with Back and Forward.
 - **Arriving on `/work/<slug>/`:** the page is the home page plus that project's `<head>`; after hydration the sheet opens on that project. Links shared before the pages existed (`/?project=slug`) open it the same way.
 - **Tab title:** follows the sheet, so history entries and bookmarks carry the project's name.

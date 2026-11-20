@@ -33,6 +33,27 @@ export function CaseStudy({ project, inLibrary = false }) {
   );
 }
 
+/** Where the visitor is in the case studies: one segment per study, filled up to the open one. Each segment opens its study. */
+function CaseTrack({ index, onPick }) {
+  return (
+    <nav className="sheet-track" aria-label="Case studies">
+      <ol>
+        {caseOrder.map((slug, i) => {
+          const p = projectBySlug[slug];
+          const state = i < index ? 'seen' : i === index ? 'current' : 'ahead';
+          return (
+            <li key={slug} className={state}>
+              <button type="button" aria-current={state === 'current' ? 'step' : undefined} onClick={() => onPick(slug)}>
+                <span>{p.short ?? p.title}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
 /** The case study opens in a modal <dialog>. Esc, Close, a click outside or Back all close it. */
 export default function CaseSheet() {
   const open = useSelector(selectOpenCase);
@@ -45,16 +66,20 @@ export default function CaseSheet() {
     if (open && body.current) body.current.scrollTop = 0;
   }, [open]);
   const project = open ? projectBySlug[open] : null;
+  const index = project ? caseOrder.indexOf(open) : -1;
+  const count = project ? `${index + 1} of ${caseOrder.length}` : '';
+  // The dialog is named in full here because phones hide the label's title part (the heading below repeats it)
   return (
-    <dialog className="sheet" id="sheet" ref={dialog} aria-labelledby="sheet-title" onCancel={(e) => { e.preventDefault(); nav.close(); }} onClick={(e) => e.target === dialog.current && nav.close()}>
+    <dialog className="sheet" id="sheet" ref={dialog} aria-label={project ? `Case study ${count}: ${project.title}` : 'Case study'} onCancel={(e) => { e.preventDefault(); nav.close(); }} onClick={(e) => e.target === dialog.current && nav.close()}>
       <div className="sheet-bar">
-        <p className="crumb" id="sheet-title">{project ? `Case study ${caseOrder.indexOf(open) + 1} of ${caseOrder.length}: ${project.title}` : 'Case study'}</p>
+        <p className="crumb" id="sheet-title">{project ? <>Case study <span className="crumb-count">{count}</span><span className="crumb-title">: {project.title}</span></> : 'Case study'}</p>
         <div className="sheet-nav">
           <button className="btn" type="button" data-step="-1" onClick={() => nav.step(-1)}>← Prev</button>
           <button className="btn" type="button" data-step="1" onClick={() => nav.step(1)}>Next →</button>
           <button className="btn primary" type="button" data-close onClick={() => nav.close()}>Close</button>
         </div>
       </div>
+      {project && <CaseTrack index={index} onPick={(slug) => nav.goTo(slug)} />}
       <div className="sheet-body" ref={body}>{project && <CaseStudy key={project.slug} project={project} />}</div>
     </dialog>
   );

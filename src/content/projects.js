@@ -60,6 +60,7 @@ export const projects = [
     slug: 'thesis',
     pageTitle: 'Federated captioning of medical images, an M.Tech thesis',
     title: 'Federated captioning of medical images',
+    short: 'Thesis', // the case-study track's label; the others use their title
     size: 'full',
     color: 'c-4',
     strip: ['M.Tech thesis', 'May 2026–now'],

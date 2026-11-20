@@ -6,7 +6,7 @@ import { pageTitle } from '../content/site';
 import { HOME, caseUrl, slugFromUrl } from '../lib/routes';
 
 // Case studies have their own URLs (/work/slug/). Opening from a card pushes a history entry;
-// closing undoes it, so Back never reopens a closed sheet. Prev/Next replace the entry.
+// closing undoes it, so Back never reopens a closed sheet. Prev/Next and the track replace the entry.
 const CaseNav = createContext(null);
 const order = projects.map((p) => p.slug);
 
@@ -23,19 +23,25 @@ export function CaseNavProvider({ children }) {
   const pushed = useRef(false);
   const opener = useRef(null);
 
-  const api = useMemo(
-    () => ({
+  const api = useMemo(() => {
+    // Switch the open sheet to another case study, in place (no new history entry)
+    const goTo = (slug) => {
+      if (!projectBySlug[slug] || store.getState().caseStudy.open === slug) return;
+      dispatch(openCase(slug));
+      history.replaceState({ project: slug }, '', caseUrl(slug));
+    };
+    return {
       openFromCard(slug, element) {
         opener.current = element;
         dispatch(openCase(slug));
         history.pushState({ project: slug }, '', caseUrl(slug));
         pushed.current = true;
       },
+      goTo,
+      // Prev/Next wrap around: Next on the last case study goes back to the first
       step(direction) {
         const current = store.getState().caseStudy.open;
-        const slug = order[(order.indexOf(current) + direction + order.length) % order.length];
-        dispatch(openCase(slug));
-        history.replaceState({ project: slug }, '', caseUrl(slug));
+        goTo(order[(order.indexOf(current) + direction + order.length) % order.length]);
       },
       close() {
         if (pushed.current) history.back();
@@ -45,9 +51,8 @@ export function CaseNavProvider({ children }) {
           dispatch(closeCase());
         }
       },
-    }),
-    [dispatch, store],
-  );
+    };
+  }, [dispatch, store]);
 
   // Back/Forward, and a shared link that arrives at /work/slug/ (or the older ?project=slug)
   useEffect(() => {
