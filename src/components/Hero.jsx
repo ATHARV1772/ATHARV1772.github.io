@@ -30,6 +30,7 @@ export default function Hero() {
           <p className="name" aria-hidden="true">Atharv<br />Shinde</p>
           <p className="role">{person.role}</p>
           <h1 id="hero-title"><span className="visually-hidden">{person.name}: </span>{person.headline}</h1>
+          <p className="hero-line">{person.intro}</p>
           <div className="cta">
             <a className="btn primary" href="#work">See the work <span aria-hidden="true">→</span></a>
             <a className="btn" href={`mailto:${person.email}`}>Email me</a>

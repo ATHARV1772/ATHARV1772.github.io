@@ -8,13 +8,16 @@ import { selectActionLog } from '../../src/store/actionLogSlice';
 
 const at = (h, m = 0) => h * 60 + m;
 
-/** Puts a stand-in for the browser's localStorage on globalThis for one test, and returns a function that removes it. */
-function withStorage(storage) {
-  const before = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
-  Object.defineProperty(globalThis, 'localStorage', { value: storage, configurable: true, writable: true });
+/** Puts stand-ins for the browser's localStorage and sessionStorage on globalThis for one test, and returns a function that removes them. */
+function withStorage(local, session = local) {
+  const fakes = { localStorage: local, sessionStorage: session };
+  const before = Object.fromEntries(Object.keys(fakes).map((n) => [n, Object.getOwnPropertyDescriptor(globalThis, n)]));
+  for (const [n, value] of Object.entries(fakes)) Object.defineProperty(globalThis, n, { value, configurable: true, writable: true });
   return () => {
-    if (before) Object.defineProperty(globalThis, 'localStorage', before);
-    else delete globalThis.localStorage;
+    for (const n of Object.keys(fakes)) {
+      if (before[n]) Object.defineProperty(globalThis, n, before[n]);
+      else delete globalThis[n];
+    }
   };
 }
 
@@ -124,15 +127,17 @@ test('opening and closing a case study', () => {
   assert.equal(selectOpenCase(store.getState()), null);
 });
 
-test('the painting and the mode are remembered for the next visit', () => {
-  const saved = new Map();
+test('the painting and the pause are kept for the next visit; the mode only for this one', () => {
+  const saved = new Map(), visit = new Map();
   let writes = 0;
-  const restore = withStorage({ setItem: (k, v) => { writes += 1; saved.set(k, v); }, getItem: (k) => saved.get(k) ?? null });
+  const fake = (map) => ({ setItem: (k, v) => { writes += 1; map.set(k, v); }, getItem: (k) => map.get(k) ?? null });
+  const restore = withStorage(fake(saved), fake(visit));
   try {
     const store = makeStore();
     store.dispatch(setArt('fields'));
     store.dispatch(setMode('night'));
-    assert.deepEqual(Object.fromEntries(saved), { art: 'fields', mode: 'night', motion: 'on' });
+    assert.deepEqual(Object.fromEntries(saved), { art: 'fields', motion: 'on' });
+    assert.deepEqual(Object.fromEntries(visit), { mode: 'night' });
     store.dispatch(toggleMotion());
     assert.equal(saved.get('motion'), 'off');
     const count = writes;

@@ -12,10 +12,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script>
-  /* Paint the right painting and time of day before React loads, so there is no flash. Auto follows the visitor's clock (same windows as src/lib/time.js). */
+  /* Paint the right painting and time of day before React loads, so there is no flash. Auto follows the visitor's clock (same windows as src/lib/time.js).
+     The painting and a paused animation are remembered; a time-of-day choice lasts only for this visit, so every new visit opens on Auto. */
   (function () {
     var mode = "auto", art = "coast", motion = "on";
-    try { mode = localStorage.getItem("mode") || "auto"; art = localStorage.getItem("art") === "fields" ? "fields" : "coast"; motion = localStorage.getItem("motion") === "off" ? "off" : "on"; } catch (e) {}
+    try { art = localStorage.getItem("art") === "fields" ? "fields" : "coast"; motion = localStorage.getItem("motion") === "off" ? "off" : "on"; mode = sessionStorage.getItem("mode") || "auto"; } catch (e) {}
     if (["auto", "day", "golden", "night"].indexOf(mode) < 0) mode = "auto";
     var now = new Date(), h = now.getHours() + now.getMinutes() / 60;
     var phase = (h >= 5.5 && h < 7) || (h >= 16.5 && h < 19) ? "golden" : h >= 7 && h < 16.5 ? "day" : "night";

@@ -14,6 +14,7 @@ export function CaseStudy({ project, inLibrary = false }) {
       <h2>{project.title}</h2>
       <p className="lede">{c.lede}</p>
       <ul className="tags">{c.tags.map((t) => <li key={t}>{t}</li>)}</ul>
+      {c.links && <p className="case-links">{c.links.map((l) => <a className="btn" key={l.href} href={l.href}>{l.label} <span aria-hidden="true">↗</span></a>)}</p>}
       {c.metrics && <div className="metrics">{c.metrics.map(([b, s]) => <div className="metric" key={s}><b>{b}</b><span>{s}</span></div>)}</div>}
       {c.score && (
         <>
@@ -25,10 +26,10 @@ export function CaseStudy({ project, inLibrary = false }) {
         <p className="score-note" aria-hidden="true">{c.score.caption}</p>
         </>
       )}
+      {Demo && <Demo />}
       <div className="case-cols">
         {c.sections.map((s) => <div key={s.h}><h3>{s.h}</h3>{s.p.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}</div>)}
       </div>
-      {Demo && <Demo />}
     </article>
   );
 }

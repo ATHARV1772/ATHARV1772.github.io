@@ -1,24 +1,75 @@
 import { useEffect, useRef, useState } from 'react';
-import { prefersReducedMotion } from '../lib/theme';
 import { StoreViz } from './viz';
 import { ArtSwitch, ModeSwitch } from './Switches';
 
 /** Draws ₹ in the system font: the web fonts keep it in a second file that would cost every visitor ~100 KB. */
 const rupees = (text) => text.split('₹').flatMap((part, i) => (i ? [<span key={i} className="rupee">₹</span>, part] : [part]));
 
-const unsafeSteps = ['A reads ₹500', 'B reads ₹500', 'A checks 500 ≥ 400', 'B checks 500 ≥ 400', 'A writes ₹100', 'B writes ₹100'];
-const safeSteps = ['A locks the row, reads ₹500', 'B waits for the lock', 'A checks 500 ≥ 400', 'B is still waiting', 'A writes ₹100, unlocks', 'B reads ₹100: refused'];
+// Spend it twice (TransactiWar). A transfer reads the balance, checks it, then writes what it computed. Without a row
+// lock, a second transfer that reads before the first one writes sees the old balance too, so both pass the check.
+const START = 500, AMOUNT = 400, STEP = 500; // ms between read, check and write
+const freshAccount = () => ({ balance: START, sent: 0, holder: null, waiting: [], log: [], started: [], done: [] });
 
-export function RaceDemo() {
+export function SpendTwiceGame() {
   const [locked, setLocked] = useState(false);
+  const account = useRef(freshAccount()), timers = useRef([]);
+  const [view, setView] = useState(account.current);
+  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+  const publish = () => setView({ ...account.current, log: [...account.current.log] });
+  const say = (who, text) => { account.current.log.push({ who, text }); publish(); };
+  const later = (fn) => timers.current.push(setTimeout(fn, STEP));
+  const finish = (who) => {
+    const a = account.current;
+    a.done = [...a.done, who];
+    if (a.holder === who) {
+      a.holder = a.waiting.shift() ?? null;
+      if (a.holder) read(a.holder);
+    }
+    publish();
+  };
+  function read(who) {
+    const a = account.current, seen = a.balance, lock = a.holder === who;
+    say(who, `${who} ${lock ? 'locks the row, reads' : 'reads'} ₹${seen}`);
+    later(() => {
+      if (seen < AMOUNT) { say(who, `${who} sees ₹${seen}: refused`); finish(who); return; }
+      say(who, `${who} checks ${seen} ≥ ${AMOUNT}: OK`);
+      later(() => {
+        a.balance = seen - AMOUNT;
+        a.sent += AMOUNT;
+        say(who, `${who} writes ₹${a.balance}${lock ? ', unlocks' : ''}`);
+        finish(who);
+      });
+    });
+  }
+  const send = (who) => {
+    const a = account.current;
+    if (a.started.includes(who)) return;
+    a.started = [...a.started, who];
+    if (locked && a.holder) { a.waiting.push(who); say(who, `${who} waits for the lock`); return; }
+    if (locked) a.holder = who;
+    read(who);
+  };
+  const reset = () => { timers.current.forEach(clearTimeout); timers.current = []; account.current = freshAccount(); publish(); };
+  const running = view.started.length > view.done.length, finished = view.done.length === 2;
+  let message = `₹${START} in the account. Two ₹${AMOUNT} transfers should never both go through. Make them.`, tone = ' calm';
+  if (running) message = 'Running…';
+  else if (view.started.length === 1) message = 'One went through. Now send the other.';
+  else if (finished && view.sent > START) tone = '', message = `Both transfers read ₹${START} before either wrote, so both passed the check: ₹${view.sent} left a ₹${START} account. Now turn on the row lock and try again.`;
+  else if (finished && locked) { tone = ' ok'; message = `With the row lock, the second transfer can only read the balance after the first has written it, so it sees ₹${START - AMOUNT} and is refused. However fast you click, the balance holds. Our app did this.`; }
+  else if (finished) message = `The first transfer had already written ₹${START - AMOUNT} when the second read the balance, so it was refused. Send both within a second.`;
   return (
     <div className="demo">
-      <div className="panel-head">Try it <small>the race every payments app has to survive</small></div>
+      <div className="panel-head">Try it <small>spend it twice</small></div>
       <div className="demo-body">
-        <p className="demo-sub">{rupees('Two ₹400 transfers reach a ₹500 balance at the same moment. Without a lock, both pass the balance check.')}</p>
-        <button className="switch" type="button" aria-pressed={locked} onClick={() => setLocked((l) => !l)}><span className="track" aria-hidden="true"><i /></span>Row lock</button>
-        <div className="steps">{(locked ? safeSteps : unsafeSteps).map((s) => <span key={s}>{rupees(s)}</span>)}</div>
-        <p className={`out${locked ? ' ok' : ''}`} aria-live="polite">{locked ? 'Second transfer refused. Balance stays correct.' : rupees('₹800 left a ₹500 account. Double spend.')}</p>
+        <div className="twice-controls">
+          <button className="btn primary" type="button" aria-disabled={view.started.includes('A')} onClick={() => send('A')}>{rupees(`Send ₹${AMOUNT} (A)`)}</button>
+          <button className="btn primary" type="button" aria-disabled={view.started.includes('B')} onClick={() => send('B')}>{rupees(`Send ₹${AMOUNT} (B)`)}</button>
+          <button className="btn" type="button" disabled={!view.started.length || running} onClick={reset}>Reset</button>
+        </div>
+        <button className="switch" type="button" aria-pressed={locked} disabled={running} onClick={() => { reset(); setLocked((l) => !l); }}><span className="track" aria-hidden="true"><i /></span>Row lock</button>
+        <p className="twice-meter"><span>{rupees(`Balance ₹${view.balance}`)}</span><span>{rupees(`Sent ₹${view.sent}`)}</span></p>
+        {view.log.length > 0 && <ol className="twice-log">{view.log.map((l, i) => <li key={i} className={l.who === 'B' ? 'b' : 'a'} style={{ gridRow: i + 1 }}>{rupees(l.text)}</li>)}</ol>}
+        <p className={`out${tone}`} aria-live="polite">{rupees(message)}</p>
       </div>
     </div>
   );
@@ -53,54 +104,80 @@ export function FaithDemo() {
 }
 
 // One federated round: updates travel in, the global model merges them, the result travels back out
-const clients = [[260, 58, 'Epidural', 24], [400.76, 160.27, 'Subdural', 200.27], [346.99, 325.73, 'Subarachnoid', 365.73], [173.01, 325.73, 'Intraventricular', 365.73], [119.24, 160.27, 'Intraparenchymal', 200.27]];
-const centre = { x: 260, y: 206 };
-const ROUND = 2400;
+// Missing isn't negative (AdaptFedMLP). Each hospital labels one bleed type, though a scan can show any of them.
+// BCE reads every unlabelled type as "no bleed"; FedMLP's partial-class loss counts only the labels a hospital gave.
+// An illustration with five made-up scans: it counts labels, not losses.
+const BLEEDS = ['EDH', 'IPH', 'IVH', 'SAH', 'SDH'];
+const SCANS = [
+  { at: 1, shows: ['IPH', 'SDH'] },
+  { at: 3, shows: ['IVH', 'SAH'] },
+  { at: 0, shows: ['SDH'] },
+  { at: 4, shows: ['IPH', 'SAH', 'SDH'] },
+  { at: 2, shows: [] },
+];
+const listed = (xs) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
+const tally = BLEEDS.map((b, i) => {
+  const own = SCANS.filter((s) => s.at === i), other = SCANS.filter((s) => s.at !== i);
+  const yes = own.filter((s) => s.shows.includes(b)).length;
+  return { b, yes, ownNo: own.length - yes, bceNo: SCANS.length - yes, wrong: other.filter((s) => s.shows.includes(b)).length };
+});
+const totals = tally.reduce((t, r) => ({ yes: t.yes + r.yes, ownNo: t.ownNo + r.ownNo, bceNo: t.bceNo + r.bceNo, wrong: t.wrong + r.wrong }), { yes: 0, ownNo: 0, bceNo: 0, wrong: 0 });
 
-export function FedDemo() {
-  const [playing, setPlaying] = useState(false);
-  const [round, setRound] = useState(50);
-  const dots = useRef([]), server = useRef(null), elapsed = useRef(0);
-  useEffect(() => { if (!prefersReducedMotion()) setPlaying(true); }, []);
-  useEffect(() => {
-    if (!playing) return undefined;
-    let raf = 0, last = null;
-    const frame = (now) => {
-      if (last !== null) elapsed.current += now - last;
-      last = now;
-      const ms = elapsed.current, k = Math.floor(ms / ROUND), t = (ms % ROUND) / ROUND, merging = t >= 0.42 && t < 0.55;
-      setRound((r) => (r === (k % 50) + 1 ? r : (k % 50) + 1));
-      server.current?.classList.toggle('merging', merging);
-      clients.forEach(([x, y], i) => {
-        const d = dots.current[i];
-        if (!d) return;
-        if (merging) { d.style.opacity = '0'; return; }
-        const inbound = t < 0.42, f = inbound ? t / 0.42 : (t - 0.55) / 0.45;
-        const a = inbound ? { x, y } : centre, b = inbound ? centre : { x, y };
-        d.setAttribute('cx', (a.x + (b.x - a.x) * f).toFixed(1));
-        d.setAttribute('cy', (a.y + (b.y - a.y) * f).toFixed(1));
-        d.setAttribute('class', inbound ? 'pulse-in' : 'pulse-out');
-        d.style.opacity = '1';
-      });
-      raf = requestAnimationFrame(frame);
-    };
-    raf = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(raf);
-  }, [playing]);
+export function MissingLabelGame() {
+  const [n, setN] = useState(0);
+  const [marked, setMarked] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState({ caught: 0, wrong: 0 });
+  const head = <div className="panel-head">Try it <small>missing isn’t negative</small></div>;
+  const restart = () => { setN(0); setMarked([]); setChecked(false); setScore({ caught: 0, wrong: 0 }); };
+  if (n === SCANS.length) {
+    return (
+      <div className="demo">
+        {head}
+        <div className="demo-body">
+          <p className="miss-where">What the model was told across the five scans</p>
+          <div className="score-wrap"><table className="score miss-tally">
+            <thead><tr><th scope="col">Bleed</th><th scope="col">BCE: yes</th><th scope="col">BCE: no</th><th scope="col">Wrong “no”</th><th scope="col">Partial-class: yes, no</th></tr></thead>
+            <tbody>{tally.map((r) => <tr key={r.b}><th scope="row">{r.b}</th><td>{r.yes}</td><td>{r.bceNo}</td><td>{r.wrong}</td><td>{r.yes}, {r.ownNo}</td></tr>)}</tbody>
+          </table></div>
+          <p className="out calm" aria-live="polite">BCE told the model “no” {totals.bceNo} times, and {totals.wrong} of those were wrong: the bleed was on the scan. The partial-class loss used only the {totals.yes + totals.ownNo} labels the hospitals gave, and none was wrong. You caught {score.caught} of {totals.wrong}{score.wrong ? `, with ${score.wrong} false alarm${score.wrong > 1 ? 's' : ''}` : ''}.</p>
+          <p className="miss-note">An illustration with five made-up scans, not results. FedMLP’s real loss also weights rare bleed types; this shows only which labels count.</p>
+          <div className="miss-actions"><button className="btn" type="button" onClick={restart}>Play again</button></div>
+        </div>
+      </div>
+    );
+  }
+  const scan = SCANS[n], own = BLEEDS[scan.at], hospital = scan.at + 1;
+  const falseNo = BLEEDS.filter((b) => b !== own && scan.shows.includes(b));
+  const caught = marked.filter((b) => falseNo.includes(b)), wrong = marked.filter((b) => !falseNo.includes(b));
+  const check = () => { setChecked(true); setScore((s) => ({ caught: s.caught + caught.length, wrong: s.wrong + wrong.length })); };
+  const next = () => { setN((i) => i + 1); setMarked([]); setChecked(false); };
+  const toggle = (b) => setMarked((m) => (m.includes(b) ? m.filter((x) => x !== b) : [...m, b]));
+  const cell = (b, text, cls) => <span key={b} className={cls}><span className="visually-hidden">{b}: </span>{text}</span>;
+  const ownCell = cell(own, scan.shows.includes(own) ? 'yes' : 'no', 'given');
+  const row = (label, cells) => <div className="miss-row"><p>{label}</p><div className="miss-cells">{cells}</div></div>;
+  let feedback = 'Tap every blank where BCE’s “no” would be false, then check.';
+  if (checked) {
+    feedback = falseNo.length
+      ? `You caught ${caught.length} of ${falseNo.length}. The scan shows ${listed(falseNo)}, but Hospital ${hospital} only labels ${own}, so BCE tells the model this patient has no ${listed(falseNo)}.`
+      : 'Nothing to catch: no unlabelled bleed is on this scan, so every “no” BCE adds is true.';
+    if (wrong.length) feedback += ` ${listed(wrong)} ${wrong.length > 1 ? 'aren’t' : 'isn’t'} on the scan, so BCE’s “no” there is right.`;
+  }
   return (
     <div className="demo">
-      <div className="panel-head">Watch it <small>one federated round at a time</small></div>
+      {head}
       <div className="demo-body">
-        <svg className="fed" viewBox="0 0 520 414" role="img" aria-label="Five clients send updates to a global model and get the combined model back, round after round.">
-          <g className="links">{clients.map(([x, y]) => <line key={x} x1={x} y1={y} x2={centre.x} y2={centre.y} />)}</g>
-          <g className="pulses">{clients.map(([x], i) => <circle key={x} r="6" style={{ opacity: 0 }} ref={(el) => { dots.current[i] = el; }} />)}</g>
-          <g>
-            {clients.map(([x, y, name, ty]) => <g key={name}><circle className="client" cx={x} cy={y} r="22" /><text x={x} y={ty}>{name}</text></g>)}
-            <rect className="server" x="206" y="178" width="108" height="56" ref={server} />
-            <text className="server-label" x="260" y="211">Global model</text>
-          </g>
-        </svg>
-        <p className="fed-bar"><span className="fed-round">{playing || round !== 50 ? `Round ${round} of 50` : '50 rounds'}</span><button className="btn fed-toggle" type="button" onClick={() => setPlaying((p) => !p)}>{playing ? 'Pause' : 'Play'}</button></p>
+        <p className="demo-sub">Each hospital labels one bleed type, though a scan can show any of them. BCE treats every unlabelled type as “no bleed”.</p>
+        <p className="miss-where">Scan {n + 1} of {SCANS.length}: Hospital {hospital}, which labels only {own}</p>
+        <div className="miss-cells miss-names" aria-hidden="true">{BLEEDS.map((b) => <span key={b}>{b}</span>)}</div>
+        {row('On the scan', BLEEDS.map((b) => (scan.shows.includes(b) ? cell(b, 'seen', 'seen') : cell(b, '–', 'faint'))))}
+        {row(`Hospital ${hospital}’s labels`, BLEEDS.map((b) => (b === own ? ownCell : (
+          <button key={b} type="button" aria-label={`${b}, not labelled`} aria-pressed={marked.includes(b)} disabled={checked} onClick={() => toggle(b)}>{marked.includes(b) ? '✗' : '?'}</button>
+        ))))}
+        {checked && row('BCE reads', BLEEDS.map((b) => (b === own ? ownCell : cell(b, 'no', scan.shows.includes(b) ? 'wrong' : undefined))))}
+        {checked && row('FedMLP’s partial-class loss reads', BLEEDS.map((b) => (b === own ? ownCell : cell(b, '–', 'ignored'))))}
+        <div className="miss-actions"><button className="btn primary" type="button" onClick={checked ? next : check}>{!checked ? 'Check' : n + 1 < SCANS.length ? 'Next scan' : 'See what the model was told'}</button></div>
+        <p className={`out${!checked ? ' calm' : falseNo.length ? '' : ' ok'}`} aria-live="polite">{feedback}</p>
       </div>
     </div>
   );
@@ -119,4 +196,4 @@ export function StoreDemo() {
   );
 }
 
-export const demoFor = { race: RaceDemo, faith: FaithDemo, fed: FedDemo, store: StoreDemo };
+export const demoFor = { race: SpendTwiceGame, faith: FaithDemo, labels: MissingLabelGame, store: StoreDemo };

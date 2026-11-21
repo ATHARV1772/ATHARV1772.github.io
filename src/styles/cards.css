@@ -58,7 +58,7 @@
 
 /* Paired cards end at the same height: the visual in the shorter card grows to fill the gap
    (content centred inside it; the store panel keeps its log at the top) instead of leaving empty space at the bottom */
-.card:not(.full) .card-in { grid-template-rows: auto auto 1fr; }
+.card:not(.full) .card-in { grid-template-rows: auto auto auto 1fr; } /* title, punchline, lead, then the picture takes the rest */
 .card:not(.full) .card-in > .viz { display: grid; align-content: center; }
 .card.c-ink .card-in > .store-viz { align-content: start; }
 

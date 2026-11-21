@@ -49,7 +49,7 @@ svg { display: block; }
 .skip:focus { top: 30px; }
 
 /* overflow: clip trims the header and footer to the rounded corners without breaking the sticky header (hidden would) */
-.frame { border-radius: var(--radius); max-width: 1400px; margin: 0 auto; background: var(--paper); border: 3px solid var(--line); box-shadow: 10px 10px 0 var(--shadow); overflow: clip; }
+.frame { border-radius: var(--radius); max-width: 1600px; margin: 0 auto; background: var(--paper); border: 3px solid var(--line); box-shadow: 10px 10px 0 var(--shadow); overflow: clip; }
 .mono { font-family: var(--mono); }
 .cond { font-stretch: var(--head-stretch); font-weight: 800; text-transform: uppercase; }
 
@@ -94,6 +94,7 @@ svg { display: block; }
 .name { font-weight: 900; font-stretch: 125%; font-size: clamp(44px, 5.2vw, 84px); line-height: 0.88; text-transform: uppercase; letter-spacing: -0.02em; }
 .role { font: 500 13px/1.5 var(--mono); text-transform: uppercase; margin-top: 16px; color: var(--ink-2); }
 .hero h1 { font-weight: 800; font-stretch: var(--head-stretch); font-size: calc(clamp(40px, 4vw, 62px) * var(--head-scale)); line-height: 0.98; text-transform: uppercase; margin-top: 44px; max-width: 13ch; }
+.hero-line { font-size: 18px; line-height: 1.5; color: var(--ink-2); max-width: 40ch; margin-top: 20px; text-wrap: balance; }
 /* If the web font fails to load, the wider fallback must not push big headings past a narrow screen */
 .name, .hero h1, .section-head h2, .card h3, .case h2 { overflow-wrap: anywhere; }
 .cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; position: relative; z-index: 1; }
@@ -133,10 +134,32 @@ html:not(.js) .art-switch { display: none; }
 .track i { border-radius: var(--radius-dot); position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; background: var(--ink); transition: transform var(--snap); }
 .switch[aria-pressed="true"] .track { background: var(--accent-2-strong); }
 .switch[aria-pressed="true"] .track i { transform: translateX(28px); background: var(--on-accent); } /* dark knob on the blue track in every theme: 3:1 or better */
-.steps { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font: 500 11.5px/1.35 var(--mono); }
-.steps > span { border-radius: var(--radius-btn); border: 2px solid var(--line); background: var(--card); padding: 7px 8px; }
 .out { border-radius: var(--radius-btn); margin-top: 12px; border: 2px solid var(--line); padding: 10px 11px; font: 700 12px/1.45 var(--mono); text-transform: uppercase; background: var(--accent); color: var(--on-accent); }
 .out.ok { background: var(--accent-2); }
+.demo .out { text-transform: none; }
+.out.calm { background: var(--card); color: var(--ink); }
+/* Spend it twice (TransactiWar) */
+.twice-controls { display: flex; flex-wrap: wrap; gap: 10px; }
+.demo .btn:disabled, .demo .btn[aria-disabled="true"], .switch:disabled { opacity: 0.45; cursor: default; }
+.twice-meter { display: flex; gap: 22px; font: 700 14px/1.3 var(--mono); }
+.twice-log { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px 10px; margin: 12px 0 0; padding: 0; list-style: none; font: 500 11.5px/1.35 var(--mono); }
+.twice-log li { border-radius: var(--radius-btn); border: 2px solid var(--line); background: var(--card); padding: 7px 8px; }
+.twice-log .a { grid-column: 1; }
+.twice-log .b { grid-column: 2; }
+/* Missing isn't negative (AdaptFedMLP) */
+.miss-where { font: 700 13px/1.4 var(--mono); margin-bottom: 12px; }
+.miss-row { margin-top: 10px; }
+.miss-row > p { font: 700 11px/1.2 var(--mono); text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.miss-cells { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.miss-cells > span, .miss-cells > button { display: grid; place-items: center; min-height: 38px; padding: 0; border: 2px solid var(--line); border-radius: var(--radius-btn); background: var(--paper); color: var(--ink); font: 700 12.5px/1 var(--mono); }
+.miss-names > span { min-height: 0; border: 0; background: none; font-size: 11px; }
+.miss-cells .seen { background: var(--accent-2); color: var(--on-accent); }
+.miss-cells .faint, .miss-cells .ignored { border-style: dashed; background: none; color: var(--muted); }
+.miss-cells .wrong, .miss-cells button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+.miss-cells button { cursor: pointer; }
+.miss-cells button:disabled { cursor: default; }
+.miss-actions { margin-top: 14px; }
+.miss-note { font: 500 12px/1.5 var(--mono); color: var(--muted); margin-top: 10px; }
 
 
 /* ---------- Credentials bar ---------- */
@@ -169,8 +192,9 @@ main > .vista { content-visibility: auto; contain-intrinsic-size: auto 260px; }
 .card-stats b { display: block; font: 700 22px/1.1 var(--mono); font-variant-numeric: tabular-nums; }
 .card-stats span { display: block; margin-top: 4px; font: 500 12px/1.4 var(--mono); color: var(--muted); }
 @media (min-width: 1181px) {
-  .card.full .card-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); grid-template-areas: "t v" "l v" "n v"; grid-template-rows: auto auto 1fr; column-gap: 36px; }
+  .card.full .card-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); grid-template-areas: "t v" "p v" "l v" "n v"; grid-template-rows: auto auto auto 1fr; column-gap: 36px; }
   .card.full h3 { grid-area: t; }
+  .card.full .punch { grid-area: p; }
   .card.full .lead { grid-area: l; }
   .card.full .note { grid-area: n; align-self: start; }
   .card.full .viz { grid-area: v; align-self: center; }
@@ -192,8 +216,10 @@ main > .vista { content-visibility: auto; contain-intrinsic-size: auto 260px; }
 .c-3 .strip { background: var(--accent-3); }
 .c-4 .strip { background: var(--accent-4); }
 .card-in { display: grid; gap: 14px; padding: 18px 18px 18px; flex: 1; align-content: start; }
-.card h3 { font-weight: 800; font-stretch: var(--head-stretch); font-size: calc(clamp(32px, 3vw, 42px) * var(--head-scale)); line-height: 0.95; text-transform: uppercase; }
-.card .lead { color: var(--ink-2); font-size: 15.5px; }
+.card h3 { font-weight: 800; font-stretch: var(--head-stretch); font-size: calc(clamp(32px, 3vw, 42px) * var(--head-scale)); line-height: 1; } /* project names keep their real casing */
+.card .punch { font: 700 19px/1.3 var(--display); color: var(--ink); max-width: 62ch; text-wrap: balance; }
+.card .punch span { display: inline-block; }
+.card .lead { color: var(--ink-2); font-size: 15.5px; max-width: 70ch; }
 .viz { border: 2px solid var(--line); background: var(--paper); padding: 14px; border-radius: calc(var(--radius) * 0.6); }
 .viz svg { width: 100%; max-width: 520px; height: auto; margin: 0 auto; }
 .viz text { font: 500 12px var(--mono); fill: var(--ink); }
@@ -358,8 +384,9 @@ button.chip:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--sha
 .sheet-track li:not(.current) button:hover { background: var(--accent-2); color: var(--on-accent); }
 
 .case .meta { font: 700 12px/1.4 var(--mono); text-transform: uppercase; color: var(--muted); }
-.case h2 { font-weight: 800; font-stretch: var(--head-stretch); font-size: calc(clamp(44px, 6vw, 84px) * var(--head-scale)); line-height: 0.9; text-transform: uppercase; margin-top: 10px; }
+.case h2 { font-weight: 800; font-stretch: var(--head-stretch); font-size: calc(clamp(44px, 6vw, 84px) * var(--head-scale)); line-height: 0.98; margin-top: 10px; }
 .case .lede { font-size: clamp(18px, 1.8vw, 22px); line-height: 1.45; max-width: 52ch; margin-top: 16px; color: var(--ink-2); }
+.case-links { margin-top: 16px; }
 .case .tags { margin-top: 18px; }
 .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-top: 26px; }
 .metric { border-radius: calc(var(--radius) * 0.6); border: 2px solid var(--line); background: var(--card); box-shadow: 4px 4px 0 var(--shadow); padding: 12px 14px; }
@@ -397,16 +424,6 @@ button.chip:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--sha
 .score td { font: 700 16px/1 var(--mono); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .score tbody tr:last-child th, .score tbody tr:last-child td { border-bottom: 0; }
 .score tr.mine { background: var(--accent-2); color: var(--on-accent); }
-.fed { width: 100%; max-width: 560px; margin: 0 auto; height: auto; }
-.fed .links line { stroke: var(--ink); stroke-width: 1.5; opacity: 0.35; }
-.fed .client { fill: var(--card); stroke: var(--ink); stroke-width: 2; }
-.fed text { font: 500 12px var(--mono); fill: var(--ink); text-anchor: middle; }
-.fed .server { fill: var(--ink); }
-.fed .server.merging { fill: var(--accent); }
-.fed .server-label { fill: var(--paper); font-weight: 700; }
-.fed .pulse-in { fill: var(--accent-2-strong); }
-.fed .pulse-out { fill: var(--accent); }
-.fed-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 12px; font: 700 12px/1 var(--mono); text-transform: uppercase; }
 
 .case-library { padding: 40px 28px; }
 .js .case-library { display: none; }
@@ -476,7 +493,6 @@ button.chip:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--sha
   .sheet-track li:not(.current) button:hover { background: none; }
   .sheet-track li:not(.current) button:hover::before { background: var(--accent-2); }
   .case-cols, .faith-demo { grid-template-columns: 1fr; }
-  .steps { grid-template-columns: 1fr; }
 }
 /* The smallest phones (320 px): slimmer time-of-day buttons, or the Night button gets cut off */
 @media (max-width: 359px) {

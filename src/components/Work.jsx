@@ -1,10 +1,16 @@
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { projects } from '../content/projects';
 import { hoverProject, selectFocus } from '../store/highlightSlice';
 import { useCaseNav } from '../hooks/useCaseNavigation';
 import { vizFor } from './viz';
 import { caseUrl } from '../lib/routes';
+
+/** The card's one-line headline. Several short sentences break between sentences, never inside one. */
+function Punch({ text }) {
+  const parts = text.split(/(?<=\.)\s+/);
+  return <p className="punch">{parts.length > 1 ? parts.map((s, i) => <Fragment key={s}>{i > 0 && ' '}<span>{s}</span></Fragment>) : text}</p>;
+}
 
 const ProjectCard = memo(function ProjectCard({ project, linked }) {
   const dispatch = useDispatch();
@@ -27,13 +33,14 @@ const ProjectCard = memo(function ProjectCard({ project, linked }) {
       <p className="strip"><span>{project.strip[0]}</span><span>{project.strip[1]}</span></p>
       <div className="card-in">
         <h3><a className="card-link" href={`${caseUrl(project.slug)}#case-${project.slug}`} onClick={open}>{project.title}</a></h3>
+        {project.punch && <Punch text={project.punch} />}
         <p className="lead">{project.lead}</p>
         {Viz && <Viz />}
         {project.note && <p className="note">{project.note}</p>}
       </div>
       <div className="card-foot">
         <ul className="tags">{project.tags.map((t) => <li key={t}>{t}</li>)}</ul>
-        <span className="btn" aria-hidden="true">Open case →</span>
+        <span className="btn" aria-hidden="true">{project.cta ?? 'Open case'} →</span>
       </div>
     </article>
   );

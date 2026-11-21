@@ -11,19 +11,20 @@ import reducer, { syncFromDocument, selectScene, selectTheme } from '../../src/s
 const template = readFileSync('src/index.html', 'utf8');
 const script = template.match(/<script>([\s\S]*?)<\/script>/)[1];
 
-function firstPaint({ hours = 12, minutes = 0, saved = {}, blocked = false } = {}) {
+// saved stands in for localStorage (kept between visits), session for sessionStorage (this visit only).
+function firstPaint({ hours = 12, minutes = 0, saved = {}, session = {}, blocked = false } = {}) {
   const root = { dataset: {}, className: '' };
-  const localStorage = {
+  const storage = (values) => ({
     getItem(key) {
       if (blocked) throw new Error('storage blocked');
-      return key in saved ? saved[key] : null;
+      return key in values ? values[key] : null;
     },
-  };
+  });
   class FixedDate {
     getHours() { return hours; }
     getMinutes() { return minutes; }
   }
-  vm.runInNewContext(script, { document: { documentElement: root }, localStorage, Date: FixedDate });
+  vm.runInNewContext(script, { document: { documentElement: root }, localStorage: storage(saved), sessionStorage: storage(session), Date: FixedDate });
   return { ...root.dataset, className: root.className };
 }
 
@@ -36,19 +37,25 @@ test('in Auto, the first paint and the store agree on the sky for every minute o
   }
 });
 
-test('a saved choice wins over the clock', () => {
-  const painted = firstPaint({ hours: 12, saved: { art: 'fields', mode: 'night' } });
+test('a choice made earlier in this visit wins over the clock', () => {
+  const painted = firstPaint({ hours: 12, saved: { art: 'fields' }, session: { mode: 'night' } });
   assert.deepEqual(painted, { art: 'fields', mode: 'night', scene: 'night', theme: 'night', motion: 'on', className: 'js' });
 });
 
+test('a new visit opens on Auto, even if an older version of the site saved a mode', () => {
+  const painted = firstPaint({ hours: 12, saved: { mode: 'night' } });
+  assert.equal(painted.mode, 'auto');
+  assert.equal(painted.scene, 'day');
+});
+
 test('golden hour keeps the light page; only night turns it dark', () => {
-  assert.equal(firstPaint({ hours: 12, saved: { mode: 'golden' } }).theme, 'day');
+  assert.equal(firstPaint({ hours: 12, session: { mode: 'golden' } }).theme, 'day');
   assert.equal(firstPaint({ hours: 17, minutes: 30 }).scene, 'golden');
   assert.equal(firstPaint({ hours: 17, minutes: 30 }).theme, 'day');
 });
 
 test('an unknown saved value falls back to the defaults', () => {
-  const painted = firstPaint({ hours: 9, saved: { art: 'mars', mode: 'dusk' } });
+  const painted = firstPaint({ hours: 9, saved: { art: 'mars' }, session: { mode: 'dusk' } });
   assert.equal(painted.art, 'coast');
   assert.equal(painted.mode, 'auto');
   assert.equal(painted.scene, phaseAt(9 * 60));
